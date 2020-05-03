@@ -7,42 +7,45 @@ import RadioGroup from './components/RadioGroup.js';
 import fetch from './utils/fetch.js';
 import { get } from './enums/fetch.js';
 import radioEnums from './enums/radioGroup.js';
+import Button from "./components/Button";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      organization: 'netflix',
-      orgPage: 1,
-      commitPage: 1,
+      organization: 'microsoft',
+      totalReposPage: 1,
+      currentReposPage: 1,
+      totalCommitsPage: 1,
       repositories: [],
       radioGroup: [radioEnums.FORKS, radioEnums.STARS],
       currentRadioSelected: radioEnums.FORKS
     }
 
     this.onRadioClick = this.onRadioClick.bind(this);
-    this.onRepoClick = this.onRepoClick.bind(this);
+    this.getRepoCommits = this.getRepoCommits.bind(this);
   }
 
   componentDidMount() {
-    this.getOrgRepo();
+    this.getOrgRepos();
   }
 
-  getOrgRepo() {
-    const { organization, orgPage } = this.state;
+  getOrgRepos() {
+    const { organization, currentReposPage } = this.state;
     fetch.get({
       type: get.ALL_REPOS,
       query: {
         orgName: organization,
-        orgPage
+        page: currentReposPage
       }
     })
-      .then(response => {
-        if (Array.isArray(response)) {
-          response.sort((a, b) => b.forks_count - a.forks_count);
+      .then(({ data, totalPage } = {}) => {
+        if (Array.isArray(data)) {
+          data.sort((a, b) => b.forks_count - a.forks_count);
           this.setState({
-            repositories: response,
-            currentRadioSelected: radioEnums.FORKS
+            repositories: data,
+            currentRadioSelected: radioEnums.FORKS,
+            totalRepoPage: totalPage
           });
         }
       })
@@ -63,7 +66,7 @@ class App extends React.Component {
     }
   }
 
-  onRepoClick(repoName) {
+  getRepoCommits(repoName) {
     fetch.get({
       type: get.VIEW_COMMITS,
       query: {
@@ -74,6 +77,15 @@ class App extends React.Component {
       .then(response => {
         console.log('what is repo click response', response)
       })
+  }
+
+  _renderLoadMoreRepos() {
+    const { totalRepoPage, currentReposPage } = this.state;
+    return totalRepoPage > currentReposPage && (
+      <Button>
+        Load More &#8250;
+      </Button>
+    );
   }
 
   render() {
@@ -87,7 +99,8 @@ class App extends React.Component {
           onChangeHandler={this.onRadioClick}
           currentRadioSelected={currentRadioSelected}
         />
-        <List items={repositories} onRepoClick={this.onRepoClick} />
+        <List items={repositories} onRepoClick={this.getRepoCommits} />
+        {this._renderLoadMoreRepos()}
       </div>
     );
   }
