@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import radioEnums from '../enums/radioGroup.js';
 
 const nameMap = {
-  [radioEnums.FORKS]: "Forks",
-  [radioEnums.STARS]: "Stars"
-}
+  [radioEnums.FORKS]: 'Forks',
+  [radioEnums.STARS]: 'Stars',
+};
 
 const RadioGroup = ({ radioGroup, onChangeHandler, currentRadioSelected }) => {
   return (
@@ -25,25 +25,21 @@ const RadioGroup = ({ radioGroup, onChangeHandler, currentRadioSelected }) => {
         </div>
       ))}
     </form>
-  )
+  );
 };
 
 RadioGroup.propTypes = {
-  radioGroup: PropTypes.arrayOf(PropTypes.oneOf([
-    radioEnums.FORKS,
-    radioEnums.STARS
-  ])),
+  radioGroup: PropTypes.arrayOf(
+    PropTypes.oneOf([radioEnums.FORKS, radioEnums.STARS])
+  ),
   onChangeHandler: PropTypes.func,
-  currentRadioSelected: PropTypes.oneOf([
-    radioEnums.FORKS,
-    radioEnums.STARS
-  ])
+  currentRadioSelected: PropTypes.oneOf([radioEnums.FORKS, radioEnums.STARS]),
 };
 
 RadioGroup.defaultProps = {
   radioGroup: [],
   onChangeHandler: () => {},
-  currentRadioSelected: []
-}
+  currentRadioSelected: [],
+};
 
 export default RadioGroup;

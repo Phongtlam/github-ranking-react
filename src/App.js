@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import List from './components/List';
+import RepositoriesList from './components/RepositoriesList.js';
 import RadioGroup from './components/RadioGroup.js';
 import fetch from './utils/fetch.js';
 import { get } from './enums/fetch.js';
 import radioEnums from './enums/radioGroup.js';
-import Button from "./components/Button";
+import Button from './components/Button';
+import CommitsList from './components/CommitsList';
+
+const initialState = {
+  organization: 'microsoft',
+  totalReposPage: 1,
+  currentReposPage: 1,
+  totalCommitsPage: 1,
+  currentCommitsPage: 1,
+  repositories: [],
+  commits: [],
+  radioGroup: [radioEnums.FORKS, radioEnums.STARS],
+  currentRadioSelected: radioEnums.FORKS,
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      organization: 'microsoft',
-      totalReposPage: 1,
-      currentReposPage: 1,
-      totalCommitsPage: 1,
-      repositories: [],
-      radioGroup: [radioEnums.FORKS, radioEnums.STARS],
-      currentRadioSelected: radioEnums.FORKS
-    }
+    this.state = { ...initialState };
 
     this.onRadioClick = this.onRadioClick.bind(this);
     this.getRepoCommits = this.getRepoCommits.bind(this);
@@ -32,23 +36,24 @@ class App extends React.Component {
 
   getOrgRepos() {
     const { organization, currentReposPage } = this.state;
-    fetch.get({
-      type: get.ALL_REPOS,
-      query: {
-        orgName: organization,
-        page: currentReposPage
-      }
-    })
+    fetch
+      .get({
+        type: get.ALL_REPOS,
+        query: {
+          orgName: organization,
+          page: currentReposPage,
+        },
+      })
       .then(({ data, totalPage } = {}) => {
         if (Array.isArray(data)) {
           data.sort((a, b) => b.forks_count - a.forks_count);
           this.setState({
+            ...initialState,
             repositories: data,
-            currentRadioSelected: radioEnums.FORKS,
-            totalRepoPage: totalPage
+            totalRepoPage: totalPage,
           });
         }
-      })
+      });
   }
 
   onRadioClick(ev) {
@@ -57,50 +62,71 @@ class App extends React.Component {
     if (changeValue) {
       let newRepositories = repositories;
       if (changeValue !== currentRadioSelected) {
-        newRepositories = repositories.sort((a, b) => b[changeValue] - a[changeValue]);
+        newRepositories = repositories.sort(
+          (a, b) => b[changeValue] - a[changeValue]
+        );
       }
       this.setState({
         currentRadioSelected: changeValue,
-        repositories: newRepositories
+        repositories: newRepositories,
       });
     }
   }
 
   getRepoCommits(repoName) {
-    fetch.get({
-      type: get.VIEW_COMMITS,
-      query: {
-        orgName: this.state.organization,
-        repoName
-      }
-    })
-      .then(response => {
-        console.log('what is repo click response', response)
+    fetch
+      .get({
+        type: get.VIEW_COMMITS,
+        query: {
+          orgName: this.state.organization,
+          repoName,
+        },
       })
+      .then((response) => {
+        console.log('what is repo click response', response);
+        const { data } = response;
+        this.setState({
+          commits: data,
+        });
+      });
   }
 
   _renderLoadMoreRepos() {
     const { totalRepoPage, currentReposPage } = this.state;
-    return totalRepoPage > currentReposPage && (
-      <Button>
-        Load More &#8250;
-      </Button>
+    return (
+      totalRepoPage > currentReposPage && (
+        <Button>
+          <span>Load More &#8250;</span>
+        </Button>
+      )
     );
   }
 
   render() {
-    const { repositories, radioGroup, currentRadioSelected } = this.state;
+    const {
+      repositories,
+      radioGroup,
+      currentRadioSelected,
+      currentReposPage,
+      totalRepoPage,
+      commits,
+    } = this.state;
     return (
       <div className="App">
-        {/*<header className="App-header">*/}
-        {/*</header>*/}
         <RadioGroup
           radioGroup={radioGroup}
           onChangeHandler={this.onRadioClick}
           currentRadioSelected={currentRadioSelected}
         />
-        <List items={repositories} onRepoClick={this.getRepoCommits} />
+        <RepositoriesList
+          items={repositories}
+          onRepoClick={this.getRepoCommits}
+        />
+        <span>
+          Page {currentReposPage} / {totalRepoPage}
+        </span>
         {this._renderLoadMoreRepos()}
+        <CommitsList items={commits} />
       </div>
     );
   }
