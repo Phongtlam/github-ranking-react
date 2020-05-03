@@ -8,6 +8,7 @@ import { get } from './enums/fetch.js';
 import radioEnums from './enums/radioGroup.js';
 import Button from './components/Button';
 import CommitsList from './components/CommitsList';
+import LRUCache from './utils/dataStructure/LRUCache.js';
 
 const initialState = {
   organization: 'microsoft',
@@ -16,7 +17,7 @@ const initialState = {
   totalCommitsPage: 1,
   currentCommitsPage: 1,
   repositories: [],
-  commits: [],
+  currentCommitsList: [],
   radioGroup: [radioEnums.FORKS, radioEnums.STARS],
   currentRadioSelected: radioEnums.FORKS,
 };
@@ -26,6 +27,7 @@ class App extends React.Component {
     super(props);
     this.state = { ...initialState };
 
+    this.commits = new LRUCache(10);
     this.onRadioClick = this.onRadioClick.bind(this);
     this.getRepoCommits = this.getRepoCommits.bind(this);
   }
@@ -45,6 +47,7 @@ class App extends React.Component {
         },
       })
       .then(({ data, totalPage } = {}) => {
+        this.commits = new LRUCache(10);
         if (Array.isArray(data)) {
           data.sort((a, b) => b.forks_count - a.forks_count);
           this.setState({
@@ -74,21 +77,30 @@ class App extends React.Component {
   }
 
   getRepoCommits(repoName) {
-    fetch
-      .get({
-        type: get.VIEW_COMMITS,
-        query: {
-          orgName: this.state.organization,
-          repoName,
-        },
+    const commitsList = this.commits.get(repoName);
+    console.log(this.commits)
+    if (commitsList) {
+      this.setState({
+        currentCommitsList: commitsList
       })
-      .then((response) => {
-        console.log('what is repo click response', response);
-        const { data } = response;
-        this.setState({
-          commits: data,
+    } else {
+      fetch
+        .get({
+          type: get.VIEW_COMMITS,
+          query: {
+            orgName: this.state.organization,
+            repoName,
+          },
+        })
+        .then((response) => {
+          const { data } = response;
+          this.setState({
+            currentCommitsList: data,
+          }, () => {
+            this.commits.put(repoName, data)
+          });
         });
-      });
+    }
   }
 
   _renderLoadMoreRepos() {
@@ -109,7 +121,7 @@ class App extends React.Component {
       currentRadioSelected,
       currentReposPage,
       totalRepoPage,
-      commits,
+      currentCommitsList,
     } = this.state;
     return (
       <div className="App">
@@ -126,7 +138,7 @@ class App extends React.Component {
           Page {currentReposPage} / {totalRepoPage}
         </span>
         {this._renderLoadMoreRepos()}
-        <CommitsList items={commits} />
+        <CommitsList items={currentCommitsList} />
       </div>
     );
   }

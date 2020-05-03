@@ -8,16 +8,16 @@ class LRUCache {
     this.tail.prev = this.head;
   }
 
-  get (key) {
+  get(key) {
     let node = this.hash[key];
     if (node) {
       this.pushToTail(node);
       return node.val
     }
-    return -1;
+    return null;
   }
 
-  put (key, val) {
+  put(key, val) {
     let node = this.hash[key];
     if (node) {
       node.val = val;
@@ -58,3 +58,5 @@ function Node(key, val) {
   this.key = key;
   this.next = this.prev = null;
 }
+
+export default LRUCache;
