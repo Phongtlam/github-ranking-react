@@ -27,7 +27,7 @@ class App extends React.Component {
     super(props);
     this.state = { ...initialState };
 
-    this.commits = new LRUCache(10);
+    this.commits = new LRUCache(10, 900000);
     this.onRadioClick = this.onRadioClick.bind(this);
     this.getRepoCommits = this.getRepoCommits.bind(this);
   }
@@ -47,7 +47,7 @@ class App extends React.Component {
         },
       })
       .then(({ data, totalPage } = {}) => {
-        this.commits = new LRUCache(10);
+        this.commits = new LRUCache(10, 900000);
         if (Array.isArray(data)) {
           data.sort((a, b) => b.forks_count - a.forks_count);
           this.setState({
@@ -93,6 +93,7 @@ class App extends React.Component {
           },
         })
         .then((response) => {
+          if (!response) return;
           const { data } = response;
           this.setState({
             currentCommitsList: data,

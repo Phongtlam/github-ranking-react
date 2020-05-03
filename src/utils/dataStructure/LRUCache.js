@@ -1,11 +1,26 @@
 class LRUCache {
-  constructor(capacity) {
+  constructor(capacity, invalidationTimer = 0) {
+    this.invalidationTimer = invalidationTimer;
+    this.initialCapacity = capacity;
     this.capacity = capacity;
     this.hash = {};
     this.head = new Node();
     this.tail = new Node();
     this.head.next = this.tail;
     this.tail.prev = this.head;
+    this.invalidateCache();
+  }
+
+  invalidateCache() {
+    if (!this.invalidationTimer) return;
+    setInterval(() => {
+      this.capacity = this.initialCapacity;
+      this.hash = {};
+      this.head = new Node();
+      this.tail = new Node();
+      this.head.next = this.tail;
+      this.tail.prev = this.head;
+    }, this.invalidationTimer)
   }
 
   get(key) {
