@@ -6,7 +6,7 @@ class Fetch {
   }
 
   get({ type, query = {} }, extras = {}) {
-    return fetch(`${this.serverUrl}/get/${type}/?${queryBuilder(query)}`, extras)
+    return fetch(`${this.serverUrl}/get/${type}?${queryBuilder(query)}`, extras)
       .then(res => res.json())
       .catch(error => {
         // error logging
