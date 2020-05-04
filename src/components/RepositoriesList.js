@@ -176,7 +176,7 @@ class RepositoriesList extends React.Component {
             )}
           </div>
           <span className="list-footer-pagination-page">
-            {items.length} Repositories per Page (Scroll to see more)
+            <b>{items.length}</b> Repositories per Page (Scroll to see more)
           </span>
         </footer>
       </ul>
