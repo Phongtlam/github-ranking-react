@@ -112,7 +112,7 @@ describe('App', () => {
           expect(instance.state.currentRadioSelected).toBe(radioEnums.FORKS);
           expect(instance.state.repositories).toStrictEqual(repos.sort((a, b) => b.forks_count - a.forks_count))
         })
-    })
+    });
   });
 
   describe('getRepoCommits', () => {

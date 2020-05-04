@@ -49,7 +49,9 @@ class App extends React.Component {
           query: {
             orgName,
             page,
-            // 'per_page': 100
+            // 'per_page': 100,
+            // 'sort': 'updated'
+            sort: 'updated'
           },
         })
         .then(response => {

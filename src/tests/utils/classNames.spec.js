@@ -5,7 +5,7 @@ describe('classNames', () => {
     expect(classNames('hello', {
       classOne: true,
       classTwo: false
-    })).toBe('hello classOne')
+    })).toBe('hello classOne');
   });
 
   it('should merge objects', () => {
@@ -14,6 +14,6 @@ describe('classNames', () => {
       classTwo: false
     }, {
       classThree: true
-    })).toBe('hello classOne classThree')
+    })).toBe('hello classOne classThree');
   })
 })
