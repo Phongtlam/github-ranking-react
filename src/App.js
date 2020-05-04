@@ -9,7 +9,10 @@ import radioEnums from './enums/radioGroup.js';
 import Button from './components/Button';
 import CommitsList from './components/CommitsList';
 import LRUCache from './utils/dataStructure/LRUCache.js';
-import repoDataAdapter from './utils/repoDataAdapter.js'
+import repoDataAdapter from './utils/repoDataAdapter.js';
+import sortByUtil from './utils/sortBy.js';
+
+import repositoriesMock from './tests/mocks/repositories.js';
 
 const initialState = {
   organization: '',
@@ -17,9 +20,11 @@ const initialState = {
   currentReposPage: 1,
   totalCommitsPage: 1,
   currentCommitsPage: 1,
+  reposSortedDesc: true,
   repositories: [],
+  // repositories: repositoriesMock.map(el => repoDataAdapter(el)),
   currentCommitsList: [],
-  radioGroup: [radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT],
+  radioGroup: [radioEnums.UPDATED_AT, radioEnums.FORKS, radioEnums.STARS],
   currentRadioSelected: radioEnums.UPDATED_AT,
 };
 
@@ -32,6 +37,8 @@ class App extends React.Component {
     this.reposPages = new LRUCache(10, 900000);
     this.onRadioClick = this.onRadioClick.bind(this);
     this.getRepoCommits = this.getRepoCommits.bind(this);
+    this.onTableHeaderClick = this.onTableHeaderClick.bind(this);
+    this.getOrgRepos = this.getOrgRepos.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +47,7 @@ class App extends React.Component {
   }
 
   getOrgRepos(orgName, page) {
-    const { organization } = this.state;
+    const { organization, reposSortedDesc } = this.state;
     const reposPageContent = this.reposPages.get(page);
 
     if (organization !== orgName || !reposPageContent) {
@@ -70,7 +77,7 @@ class App extends React.Component {
             }
             newState = {
               ...newState,
-              repositories: adaptedData.sort((a, b) => b[radioEnums.UPDATED_AT] - a[radioEnums.UPDATED_AT]),
+              repositories: sortByUtil(adaptedData, radioEnums.UPDATED_AT, reposSortedDesc),
               organization: orgName,
               currentReposPage: page
             };
@@ -81,7 +88,7 @@ class App extends React.Component {
         });
     } else {
       this.setState({
-        repositories: reposPageContent.sort((a, b) => b[radioEnums.UPDATED_AT] - a[radioEnums.UPDATED_AT]),
+        repositories: sortByUtil(reposPageContent, radioEnums.UPDATED_AT, reposSortedDesc),
         currentReposPage: page
       }, () => {
         this.reposPages.put(page, reposPageContent)
@@ -134,26 +141,19 @@ class App extends React.Component {
     }
   }
 
-  _renderLoadMoreRepos() {
-    const { totalReposPage, currentReposPage, organization } = this.state;
-    return (
-      totalReposPage > currentReposPage && (
-        <Button onClick={() => this.getOrgRepos(organization, currentReposPage + 1)}>
-          <span>Next <i className="fa fa-chevron-right" /></span>
-        </Button>
-      )
-    );
-  }
-
-  _renderGoBackPage() {
-    const { currentReposPage, organization } = this.state;
-    return (
-      currentReposPage > 1 && (
-        <Button onClick={() => this.getOrgRepos(organization, currentReposPage - 1)}>
-          <span><i className="fa fa-chevron-left" /> Last</span>
-        </Button>
-      )
-    )
+  onTableHeaderClick(sortBy) {
+    const { repositories, currentRadioSelected, reposSortedDesc } = this.state;
+    // if (sortBy !== currentRadioSelected) {
+    // }
+    this.setState({
+      reposSortedDesc: sortBy === currentRadioSelected ? !reposSortedDesc : true
+    }, () => {
+      const newRepositories = sortByUtil(repositories, sortBy, this.state.reposSortedDesc);
+      this.setState({
+        currentRadioSelected: sortBy,
+        repositories: newRepositories,
+      })
+    });
   }
 
   render() {
@@ -164,25 +164,28 @@ class App extends React.Component {
       currentReposPage,
       totalReposPage,
       currentCommitsList,
-      organization
+      organization,
+      reposSortedDesc
     } = this.state;
     return (
       <div className="App" id="App">
-        <RadioGroup
-          radioGroup={radioGroup}
-          onChangeHandler={this.onRadioClick}
-          currentRadioSelected={currentRadioSelected}
-        />
+        {/*<RadioGroup*/}
+        {/*  radioGroup={radioGroup}*/}
+        {/*  onChangeHandler={this.onRadioClick}*/}
+        {/*  currentRadioSelected={currentRadioSelected}*/}
+        {/*/>*/}
         <RepositoriesList
+          sortedBy={currentRadioSelected}
+          reposSortedDesc={reposSortedDesc}
           items={repositories}
+          onTableHeaderClick={this.onTableHeaderClick}
           orgName={organization}
           onRepoClick={this.getRepoCommits}
+          currentReposPage={currentReposPage}
+          totalReposPage={totalReposPage}
+          onPaginationClick={this.getOrgRepos}
+          organization={organization}
         />
-        {this._renderGoBackPage()}
-        <span>
-          Page {currentReposPage} / {totalReposPage}
-        </span>
-        {this._renderLoadMoreRepos()}
         <CommitsList items={currentCommitsList} />
       </div>
     );

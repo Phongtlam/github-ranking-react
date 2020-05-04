@@ -33,8 +33,8 @@ describe('App', () => {
       currentCommitsPage: 1,
       repositories: [],
       currentCommitsList: [],
-      radioGroup: [radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT],
-      currentRadioSelected: radioEnums.FORKS,
+      radioGroup: [radioEnums.UPDATED_AT, radioEnums.FORKS, radioEnums.STARS],
+      currentRadioSelected: radioEnums.UPDATED_AT,
     });
   });
 

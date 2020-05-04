@@ -2,7 +2,152 @@ ul {
   list-style-type: none;
 }
 
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
 .App {
+  font-size: 16px;
   text-align: center;
+}
+
+.repositories-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.repositories-list-header {
+  padding: 0;
+  font-size: 18px;
+  font-weight: 400;
+  border-top: 2px solid #d3ddff;
+  border-bottom: 1px solid #fff;
+  color: #039;
+  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+}
+
+.repositories-list-body {
+  height: 500px;
+  overflow-y: visible;
+  overflow-x: hidden;
+}
+
+.repositories-list-li {
+  border-bottom: 1px solid #fff;
+  color: #669;
+  border-top: 1px solid #fff;
+}
+
+.repositories-list-li:nth-child(even) {
+  background: #f2f2f2;
+}
+
+.repositories-list-li:hover {
+  color: #339;
+  background: #cdcdee;
+}
+
+.repositories-list-header .repositories-list-content {
+  height: 50px;
+}
+
+.repositories-list-content {
+  width: 25%;
+  text-align: left;
+}
+
+.repositories-list-content-button {
+  border: none;
+  cursor: pointer;
+}
+
+.repositories-list-content-button:hover, .repositories-list-content-button.active {
+  background: #d3d3d3;
+}
+
+.repositories-list-footer {
+  display: flex;
+  justify-content: space-between;
+
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-top: 2px solid #d3ddff;
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 -3px 10px 3px rgba(0, 0, 0, 0.2);
+}
+
+.repositories-list-footer-pagination {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  width: 25%;
+}
+
+.repositories-list-footer-pagination-button {
+  width: 25%;
+  height: 40px;
+  color: #e3f2fd;
+  border-color: transparent;
+  background: #42a5f5;
+  box-shadow: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.repositories-list-footer-pagination-button:hover {
+  border-color: #1e88e5;
+  color: #bbdefb;
+  background: #1e88e5;
+  box-shadow: none;
+}
+
+.repositories-list-footer-pagination-page {
+  padding-top: 10px;
 }
 
