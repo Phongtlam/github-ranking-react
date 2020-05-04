@@ -26,8 +26,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettier",
-      "pre-push": "npm test"
+      "pre-commit": "npm run prettier"
     }
   },
   "browserslist": {

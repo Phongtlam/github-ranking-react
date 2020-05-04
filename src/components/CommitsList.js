@@ -142,7 +142,8 @@ class CommitsList extends React.Component {
             </Button>
           </a>
           <span>
-            Most recent <b>{items.length}</b> Commits on this Repo (Scroll to see more)
+            Most recent <b>{items.length}</b> Commits on this Repo (Scroll to
+            see more)
           </span>
         </footer>
       </ul>
