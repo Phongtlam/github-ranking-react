@@ -1,6 +1,7 @@
 export default (data) => {
   const author = (data && data.author) || {};
   const commit = (data && data.commit) || {};
+  const getCommitDate = commit.author && commit.author.date;
   return {
     author: {
       id: author.id,
@@ -15,6 +16,8 @@ export default (data) => {
       commitUrl: data.html_url,
       parents: data.parents,
       sha: data.sha,
+      verified: !!(data.commit && data.commit.verification && data.commit.verification.verified),
+      date: getCommitDate && new Date(getCommitDate).toDateString()
     },
   };
 };

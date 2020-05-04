@@ -33,18 +33,18 @@ class RepositoriesList extends React.Component {
 
   _renderCurrentRowData(item) {
     return (
-      <div className="repositories-list-content-row-data">
-        <div className="repositories-list-content-row-data-child">
-          <span className="repositories-list-content-row-data-child-span"><b>Full Name:</b> {item.full_name}</span>
-          <span className="repositories-list-content-row-data-child-span"><b>License:</b> {item.license}</span>
-          <span className="repositories-list-content-row-data-child-span"><b>Created:</b> {item.created_at_readable}</span>
-          <span className="repositories-list-content-row-data-child-span"><b>Updated:</b> {item.updated_at_readable}</span>
+      <div className="list-content-row-data">
+        <div className="list-content-row-data-child">
+          <span className="list-content-row-data-child-span"><b>Full Name:</b> {item.full_name}</span>
+          <span className="list-content-row-data-child-span"><b>License:</b> {item.license}</span>
+          <span className="list-content-row-data-child-span"><b>Created:</b> {item.created_at_readable}</span>
+          <span className="list-content-row-data-child-span"><b>Updated:</b> {item.updated_at_readable}</span>
         </div>
-        <div className="repositories-list-content-row-data-child">
+        <div className="list-content-row-data-child">
           <span><b>Language:</b> {item.language}</span>
           <span><b>Open Issues:</b> {item.open_issues_count}</span>
         </div>
-        <div className="repositories-list-content-row-data-child repositories-list-content-row-data-child-description">
+        <div className="list-content-row-data-child repositories-list-content-row-data-child-description">
           <b>Description:</b> {item.description}
         </div>
       </div>
@@ -74,7 +74,7 @@ class RepositoriesList extends React.Component {
               <Button
                 key={label}
                 className={classNames(
-                  'repositories-list-content repositories-list-content-button',
+                  'list-content repositories-list-content-button',
                   {
                     active: sortedBy === label,
                   }
@@ -92,17 +92,17 @@ class RepositoriesList extends React.Component {
             );
           })}
         </header>
-        <div className="repositories-list-body">
+        <div className="list-body">
           {items.map((item) => (
             <li
               onClick={() => {
                 onRepoClick(orgName, item.name);
                 this._onRowClick(item.id);
               }}
-              className={classNames('repositories-list repositories-list-li')}
+              className='list-li'
               key={item.id}
             >
-              <span className="repositories-list-content">
+              <span className="list-content">
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
@@ -111,10 +111,10 @@ class RepositoriesList extends React.Component {
                   {item.name}
                 </a>
               </span>
-              <span className="repositories-list-content">
+              <span className="list-content">
                 <i className="fa fa-code-fork"> {item.forks_count}</i>
               </span>
-              <span className="repositories-list-content">
+              <span className="list-content">
                 &#9733; {item.stargazers_count}
               </span>
               <span>
@@ -126,11 +126,11 @@ class RepositoriesList extends React.Component {
             </li>
           ))}
         </div>
-        <footer className="repositories-list repositories-list-footer">
-          <div className="repositories-list-footer-pagination">
+        <footer className="repositories-list list-footer">
+          <div className="list-footer-pagination">
             {currentReposPage > 1 ? (
               <Button
-                className="repositories-list-footer-pagination-button"
+                className="list-footer-pagination-button"
                 onClick={() =>
                   onPaginationClick(organization, currentReposPage - 1)
                 }
@@ -140,14 +140,14 @@ class RepositoriesList extends React.Component {
                 </span>
               </Button>
             ) : (
-              <div className="repositories-list-footer-pagination-button" />
+              <div className="list-footer-pagination-button" />
             )}
-            <span className="repositories-list-footer-pagination-page">
+            <span className="list-footer-pagination-page">
               Page {currentReposPage} / {totalReposPage}
             </span>
             {totalReposPage > currentReposPage ? (
               <Button
-                className="repositories-list-footer-pagination-button"
+                className="list-footer-pagination-button"
                 onClick={() =>
                   onPaginationClick(organization, currentReposPage + 1)
                 }
@@ -157,10 +157,10 @@ class RepositoriesList extends React.Component {
                 </span>
               </Button>
             ) : (
-              <div className="repositories-list-footer-pagination-button" />
+              <div className="list-footer-pagination-button" />
             )}
           </div>
-          <span className="repositories-list-footer-pagination-page">
+          <span className="list-footer-pagination-page">
             {items.length} Repositories per Page (Scroll to see more)
           </span>
         </footer>

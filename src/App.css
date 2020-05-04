@@ -53,7 +53,7 @@ button,
   font-size: 16px;
   text-align: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   padding: 12px;
 }
 
@@ -63,17 +63,12 @@ button,
 }
 
 .App-table-collapse {
-  width: 50%;
+  width: 49%;
   padding: 0;
 }
 
-.repositories-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 8px;
-}
-
-.repositories-list-header {
+.repositories-list-header, .commitsList-header {
+  height: 50px;
   padding: 0;
   font-size: 18px;
   font-weight: 400;
@@ -83,32 +78,31 @@ button,
   box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
 }
 
-.repositories-list-body {
-  height: 500px;
+.list-body {
+  height: 750px;
   overflow-y: visible;
   overflow-x: hidden;
 }
 
-.repositories-list-li {
+.list-li {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px;
   border-bottom: 1px solid #fff;
   color: #669;
   border-top: 1px solid #fff;
 }
 
-.repositories-list-li:nth-child(even) {
+.list-li:nth-child(even) {
   background: #f2f2f2;
 }
 
-.repositories-list-li:hover {
+.list-li:hover {
   color: #339;
   background: #cdcdee;
 }
 
-.repositories-list-header .repositories-list-content {
-  height: 50px;
-}
-
-.repositories-list-content {
+.list-content {
   width: 25%;
   text-align: left;
   white-space: nowrap;
@@ -117,15 +111,17 @@ button,
 }
 
 .repositories-list-content-button {
+  height: 100%;
   border: none;
   cursor: pointer;
+  color: #039;
 }
 
 .repositories-list-content-button:hover, .repositories-list-content-button.active {
   background: #d3d3d3;
 }
 
-.repositories-list-footer {
+.list-footer {
   display: flex;
   justify-content: space-between;
 
@@ -136,14 +132,15 @@ button,
   box-shadow: 0 -3px 10px 3px rgba(0, 0, 0, 0.2);
 }
 
-.repositories-list-footer-pagination {
+.list-footer-pagination {
   display: flex;
   position: relative;
   justify-content: space-between;
   width: 25%;
+  padding-left: 20px;
 }
 
-.repositories-list-footer-pagination-button {
+.list-footer-pagination-button, .sha-link {
   width: 25%;
   height: 40px;
   color: #e3f2fd;
@@ -154,18 +151,22 @@ button,
   cursor: pointer;
 }
 
-.repositories-list-footer-pagination-button:hover {
+.list-footer-pagination-button:hover, .sha-link:hover {
   border-color: #1e88e5;
   color: #bbdefb;
   background: #1e88e5;
   box-shadow: none;
 }
 
-.repositories-list-footer-pagination-page {
+.sha-link {
+  width: initial;
+}
+
+.list-footer-pagination-page {
   padding-top: 10px;
 }
 
-.repositories-list-content-row-data {
+.list-content-row-data {
   display: flex;
   margin-top: 10px;
   padding-top: 5px;
@@ -174,7 +175,7 @@ button,
   border-top: 2px solid;
 }
 
-.repositories-list-content-row-data-child {
+.list-content-row-data-child {
   display: flex;
   width: 25%;
   flex-direction: column;
@@ -182,17 +183,39 @@ button,
   text-align: initial;
 }
 
-.repositories-list-content-row-data-child-span {
+.list-content-row-data-child-span {
   display: block;
   width: 100%;
   word-wrap: break-word;
 }
 
-.repositories-list-content-row-data-child-description {
+.list-content-row-data-child-description {
   flex: 2;
 }
 
 .hidden {
   display: none !important;
+}
+
+.commitsList-header {
+  line-height: 50px;
+  display: flex;
+}
+
+.commitsList-header .list-content {
+  padding-left: 7px;
+}
+
+.green-check {
+  color: #32CD32;
+}
+
+.no-underline {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.commitList-li .list-content {
+  line-height: 50px;
 }
 

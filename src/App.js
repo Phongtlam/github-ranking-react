@@ -14,6 +14,7 @@ import sortByUtil from './utils/sortBy.js';
 import classNames from './utils/classNames.js';
 
 import repositoriesMock from './tests/mocks/repositories.js';
+import commitsMock from './tests/mocks/commits.js';
 
 const initialState = {
   organization: '',
@@ -25,6 +26,7 @@ const initialState = {
   repositories: [],
   // repositories: repositoriesMock.map(el => repoDataAdapter(el)),
   currentCommitsList: [],
+  // currentCommitsList: commitsMock,
   radioGroup: [radioEnums.UPDATED_AT, radioEnums.FORKS, radioEnums.STARS],
   currentRadioSelected: radioEnums.UPDATED_AT,
 };
@@ -44,7 +46,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { organization, currentReposPage } = this.state;
-    this.getOrgRepos(organization || 'microsoft', currentReposPage);
+    this.getOrgRepos(organization || 'netflix', currentReposPage);
   }
 
   getOrgRepos(orgName, page) {

@@ -3,43 +3,64 @@ import PropTypes from 'prop-types';
 
 import classNames from '../utils/classNames'
 import dataAdapter from '../utils/commitDataAdapter.js';
+import Button from "./Button";
+
+const commitsHeaders = [
+  'Author',
+  'Sha',
+  'Verified',
+  'Commit Date'
+]
 
 const CommitsList = ({ items, className }) => {
   return (
-    <ul className={classNames(className, 'commitsList')}>
-      {items.map((item) => {
-        const { author, commit } = dataAdapter(item);
-        return (
-          <li key={commit.sha}>
-            <div>
-              <div>Author Info:</div>
-              {author.profileUrl ? (
-                <a
-                  href={author.profileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {author.name}
-                </a>
-              ) : (
-                <span>{author.name}</span>
-              )}
-              <span>{author.email}</span>
-            </div>
-            <div>
-              <div>Commit Info:</div>
-              <span>{commit.message}</span>
-              <a
-                href={commit.commitUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {commit.commitUrl}
-              </a>
-            </div>
-          </li>
-        );
-      })}
+    <ul className={classNames(className, 'commitsList-container')}>
+      <header className="commitsList-header">
+        {commitsHeaders.map(label => <span className="list-content" key={label}>{label}</span>)}
+      </header>
+      <div className="list-body">
+        {items.map((item) => {
+          const { author, commit } = dataAdapter(item);
+          console.log(commit.verified)
+          return (
+            <li className="list-li commitList-li" key={commit.sha}>
+              <div className="list-content">
+                {author.profileUrl ? (
+                  <a
+                    href={author.profileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {author.name}
+                  </a>
+                ) : (
+                  <span>{author.name}</span>
+                )}
+              </div>
+              <div className="list-content">
+                <Button title={commit.sha} className="sha-link">
+                  <a
+                    href={commit.commitUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="no-underline"
+                  >
+                    <i className="fa fa-github" aria-hidden="true"/> {commit.sha && commit.sha.substring(0, 7)}
+                  </a>
+                </Button>
+              </div>
+              <span className="list-content">
+                {commit.verified && <i className="fa fa-check green-check" aria-hidden="true" />}
+              </span>
+              <span className="list-content">
+                <i className="fa fa-calendar" aria-hidden="true" />{' '}
+                {commit.date}
+              </span>
+            </li>
+          );
+        })}
+
+      </div>
     </ul>
   );
 };
