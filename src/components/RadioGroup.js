@@ -6,7 +6,7 @@ import radioEnums from '../enums/radioGroup.js';
 const nameMap = {
   [radioEnums.FORKS]: 'Forks',
   [radioEnums.STARS]: 'Stars',
-  [radioEnums.UPDATED_AT]: 'Updated At'
+  [radioEnums.UPDATED_AT]: 'Updated At',
 };
 
 const RadioGroup = ({ radioGroup, onChangeHandler, currentRadioSelected }) => {
@@ -34,7 +34,11 @@ RadioGroup.propTypes = {
     PropTypes.oneOf([radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT])
   ),
   onChangeHandler: PropTypes.func,
-  currentRadioSelected: PropTypes.oneOf([radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT]),
+  currentRadioSelected: PropTypes.oneOf([
+    radioEnums.FORKS,
+    radioEnums.STARS,
+    radioEnums.UPDATED_AT,
+  ]),
 };
 
 RadioGroup.defaultProps = {

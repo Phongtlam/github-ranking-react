@@ -20,14 +20,14 @@ class LRUCache {
       this.tail = new Node();
       this.head.next = this.tail;
       this.tail.prev = this.head;
-    }, this.invalidationTimer)
+    }, this.invalidationTimer);
   }
 
   get(key) {
     let node = this.hash[key];
     if (node) {
       this.pushToTail(node);
-      return node.val
+      return node.val;
     }
     return null;
   }

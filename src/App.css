@@ -151,3 +151,24 @@ button,
   padding-top: 10px;
 }
 
+.repositories-list-content-row-data {
+  display: flex;
+  margin-top: 10px;
+  padding-top: 5px;
+  width: 100%;
+  justify-content: space-between;
+  border-top: 2px solid;
+}
+
+.repositories-list-content-row-data-child {
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: initial;
+}
+
+.repositories-list-content-row-data-child-description {
+  flex: 2;
+}
+

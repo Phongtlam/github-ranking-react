@@ -3,10 +3,10 @@ import App from '../App';
 import { shallow } from 'enzyme';
 
 import RadioGroup from '../components/RadioGroup';
-import radioEnums from "../enums/radioGroup";
-import RepositoriesList from "../components/RepositoriesList";
-import CommitsList from "../components/CommitsList";
-import fetch from "../utils/fetch";
+import radioEnums from '../enums/radioGroup';
+import RepositoriesList from '../components/RepositoriesList';
+import CommitsList from '../components/CommitsList';
+import fetch from '../utils/fetch';
 
 describe('App', () => {
   let component;
@@ -14,7 +14,7 @@ describe('App', () => {
   beforeEach(() => {
     component = shallow(<App />);
     instance = component.instance();
-  })
+  });
 
   it('should render', () => {
     expect(component).toBeDefined();
@@ -41,7 +41,7 @@ describe('App', () => {
   describe('getOrgRepos', () => {
     it('should not call fetch if orgName is the same and data exists in reposPages', () => {
       instance.setState({
-        organization: 'org'
+        organization: 'org',
       });
       instance.reposPages.put(1, [{}]);
       instance.reposPages.put(2, [{ a: 'hello' }]);
@@ -51,10 +51,10 @@ describe('App', () => {
 
     it('should call fetch if orgName new', () => {
       fetch.get = jest.fn(() => ({
-        then: () => {}
+        then: () => {},
       }));
       instance.setState({
-        organization: 'org'
+        organization: 'org',
       });
       instance.reposPages.put(1, [{}]);
       instance.reposPages.put(2, [{ a: 'hello' }]);
@@ -64,10 +64,10 @@ describe('App', () => {
 
     it('should call fetch if reposPages does not have the available page', () => {
       fetch.get = jest.fn(() => ({
-        then: () => {}
+        then: () => {},
       }));
       instance.setState({
-        organization: 'org'
+        organization: 'org',
       });
       instance.reposPages.put(1, [{}]);
       instance.reposPages.put(2, [{ a: 'hello' }]);
@@ -86,43 +86,45 @@ describe('App', () => {
 
     it('sort values by stars count', () => {
       instance.setState({
-        repositories: repos
+        repositories: repos,
       });
       Promise.resolve(
         instance.onRadioClick({
-          target: { value: radioEnums.STARS }
+          target: { value: radioEnums.STARS },
         })
-      )
-        .then(() => {
-          expect(instance.state.currentRadioSelected).toBe(radioEnums.STARS);
-          expect(instance.state.repositories).toStrictEqual(repos.sort((a, b) => b.stargazers_count - a.stargazers_count))
-        })
+      ).then(() => {
+        expect(instance.state.currentRadioSelected).toBe(radioEnums.STARS);
+        expect(instance.state.repositories).toStrictEqual(
+          repos.sort((a, b) => b.stargazers_count - a.stargazers_count)
+        );
+      });
     });
 
     it('sort value by forks count', () => {
       instance.setState({
-        repositories: repos
+        repositories: repos,
       });
       Promise.resolve(
         instance.onRadioClick({
-          target: { value: radioEnums.FORKS }
+          target: { value: radioEnums.FORKS },
         })
-      )
-        .then(() => {
-          expect(instance.state.currentRadioSelected).toBe(radioEnums.FORKS);
-          expect(instance.state.repositories).toStrictEqual(repos.sort((a, b) => b.forks_count - a.forks_count))
-        })
+      ).then(() => {
+        expect(instance.state.currentRadioSelected).toBe(radioEnums.FORKS);
+        expect(instance.state.repositories).toStrictEqual(
+          repos.sort((a, b) => b.forks_count - a.forks_count)
+        );
+      });
     });
   });
 
   describe('getRepoCommits', () => {
     fetch.get = jest.fn(() => ({
-      then: () => {}
+      then: () => {},
     }));
 
     it('should not fetch if organization name and repoName exists in cache', () => {
       instance.setState({
-        organization: 'org'
+        organization: 'org',
       });
       instance.commits.put('hello', [{}]);
       instance.getRepoCommits('org', 'hello');
@@ -131,7 +133,7 @@ describe('App', () => {
 
     it('should fetch if organization name has change', () => {
       instance.setState({
-        organization: 'org'
+        organization: 'org',
       });
       instance.commits.put('hello', [{}]);
       instance.getRepoCommits('org1', 'hello');
@@ -140,11 +142,11 @@ describe('App', () => {
 
     it('should fetch if repoName is new', () => {
       instance.setState({
-        organization: 'org'
+        organization: 'org',
       });
       instance.commits.put('hello', [{}]);
       instance.getRepoCommits('org', 'hello1');
       expect(fetch.get).toHaveBeenCalled;
     });
-  })
+  });
 });

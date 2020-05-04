@@ -58,41 +58,52 @@ class App extends React.Component {
             orgName,
             page,
             // 'per_page': 100,
-            sort: 'updated'
+            sort: 'updated',
           },
         })
-        .then(response => {
+        .then((response) => {
           if (!response) return;
           const { data, totalPage } = response;
           if (Array.isArray(data)) {
-            const adaptedData = data.map(el => repoDataAdapter(el));
+            const adaptedData = data.map((el) => repoDataAdapter(el));
             let newState = {};
             if (organization !== orgName) {
               this.commits = new LRUCache(10, 900000);
               this.reposPages = new LRUCache(10, 900000);
               newState = {
                 ...initialState,
-                totalReposPage: totalPage
+                totalReposPage: totalPage,
               };
             }
             newState = {
               ...newState,
-              repositories: sortByUtil(adaptedData, radioEnums.UPDATED_AT, reposSortedDesc),
+              repositories: sortByUtil(
+                adaptedData,
+                radioEnums.UPDATED_AT,
+                reposSortedDesc
+              ),
               organization: orgName,
-              currentReposPage: page
+              currentReposPage: page,
             };
             this.setState(newState, () => {
-              this.reposPages.put(page, adaptedData)
+              this.reposPages.put(page, adaptedData);
             });
           }
         });
     } else {
-      this.setState({
-        repositories: sortByUtil(reposPageContent, radioEnums.UPDATED_AT, reposSortedDesc),
-        currentReposPage: page
-      }, () => {
-        this.reposPages.put(page, reposPageContent)
-      });
+      this.setState(
+        {
+          repositories: sortByUtil(
+            reposPageContent,
+            radioEnums.UPDATED_AT,
+            reposSortedDesc
+          ),
+          currentReposPage: page,
+        },
+        () => {
+          this.reposPages.put(page, reposPageContent);
+        }
+      );
     }
   }
 
@@ -118,8 +129,8 @@ class App extends React.Component {
     const commitsList = this.commits.get(repoName);
     if (commitsList && orgName === organization) {
       this.setState({
-        currentCommitsList: commitsList
-      })
+        currentCommitsList: commitsList,
+      });
     } else {
       fetch
         .get({
@@ -132,11 +143,14 @@ class App extends React.Component {
         .then((response) => {
           if (!response) return;
           const { data } = response;
-          this.setState({
-            currentCommitsList: data,
-          }, () => {
-            this.commits.put(repoName, data)
-          });
+          this.setState(
+            {
+              currentCommitsList: data,
+            },
+            () => {
+              this.commits.put(repoName, data);
+            }
+          );
         });
     }
   }
@@ -145,15 +159,23 @@ class App extends React.Component {
     const { repositories, currentRadioSelected, reposSortedDesc } = this.state;
     // if (sortBy !== currentRadioSelected) {
     // }
-    this.setState({
-      reposSortedDesc: sortBy === currentRadioSelected ? !reposSortedDesc : true
-    }, () => {
-      const newRepositories = sortByUtil(repositories, sortBy, this.state.reposSortedDesc);
-      this.setState({
-        currentRadioSelected: sortBy,
-        repositories: newRepositories,
-      })
-    });
+    this.setState(
+      {
+        reposSortedDesc:
+          sortBy === currentRadioSelected ? !reposSortedDesc : true,
+      },
+      () => {
+        const newRepositories = sortByUtil(
+          repositories,
+          sortBy,
+          this.state.reposSortedDesc
+        );
+        this.setState({
+          currentRadioSelected: sortBy,
+          repositories: newRepositories,
+        });
+      }
+    );
   }
 
   render() {
@@ -165,7 +187,7 @@ class App extends React.Component {
       totalReposPage,
       currentCommitsList,
       organization,
-      reposSortedDesc
+      reposSortedDesc,
     } = this.state;
     return (
       <div className="App" id="App">
