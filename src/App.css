@@ -52,14 +52,25 @@ button,
 .App {
   font-size: 16px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+
+.App-table {
+  width: 100%;
+  padding: 0;
+}
+
+.App-table-collapse {
+  width: 50%;
+  padding: 0;
 }
 
 .repositories-list {
   display: flex;
   flex-wrap: wrap;
   padding: 8px;
-  margin-right: 40px;
-  margin-left: 40px;
 }
 
 .repositories-list-header {
@@ -100,6 +111,9 @@ button,
 .repositories-list-content {
   width: 25%;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .repositories-list-content-button {
@@ -168,7 +182,17 @@ button,
   text-align: initial;
 }
 
+.repositories-list-content-row-data-child-span {
+  display: block;
+  width: 100%;
+  word-wrap: break-word;
+}
+
 .repositories-list-content-row-data-child-description {
   flex: 2;
+}
+
+.hidden {
+  display: none !important;
 }
 

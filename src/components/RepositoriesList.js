@@ -35,17 +35,17 @@ class RepositoriesList extends React.Component {
     return (
       <div className="repositories-list-content-row-data">
         <div className="repositories-list-content-row-data-child">
-          <span>Full Name: {item.full_name}</span>
-          <span>License: {item.license}</span>
-          <span>Created: {item.created_at_readable}</span>
-          <span>Updated: {item.updated_at_readable}</span>
+          <span className="repositories-list-content-row-data-child-span"><b>Full Name:</b> {item.full_name}</span>
+          <span className="repositories-list-content-row-data-child-span"><b>License:</b> {item.license}</span>
+          <span className="repositories-list-content-row-data-child-span"><b>Created:</b> {item.created_at_readable}</span>
+          <span className="repositories-list-content-row-data-child-span"><b>Updated:</b> {item.updated_at_readable}</span>
         </div>
         <div className="repositories-list-content-row-data-child">
-          <span>Language: {item.language}</span>
-          <span>Open Issues: {item.open_issues_count}</span>
+          <span><b>Language:</b> {item.language}</span>
+          <span><b>Open Issues:</b> {item.open_issues_count}</span>
         </div>
         <div className="repositories-list-content-row-data-child repositories-list-content-row-data-child-description">
-          Description: {item.description}
+          <b>Description:</b> {item.description}
         </div>
       </div>
     );
@@ -64,10 +64,10 @@ class RepositoriesList extends React.Component {
       currentReposPage,
       totalReposPage,
       onPaginationClick,
+      className
     } = this.props;
-    console.log('what is items', items);
     return (
-      <ul>
+      <ul className={classNames(className, "repositories-list-container")}>
         <header className="repositories-list repositories-list-header">
           {headers.map((label) => {
             return (
@@ -183,6 +183,7 @@ RepositoriesList.propTypes = {
   onRepoClick: PropTypes.func,
   onPaginationClick: PropTypes.func,
   organization: PropTypes.string,
+  className: PropTypes.string
 };
 
 RepositoriesList.defaultProps = {
@@ -190,6 +191,7 @@ RepositoriesList.defaultProps = {
   onRepoClick: () => {},
   onPaginationClick: () => {},
   organization: '',
+  className: ''
 };
 
 export default RepositoriesList;

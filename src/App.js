@@ -11,6 +11,7 @@ import CommitsList from './components/CommitsList';
 import LRUCache from './utils/dataStructure/LRUCache.js';
 import repoDataAdapter from './utils/repoDataAdapter.js';
 import sortByUtil from './utils/sortBy.js';
+import classNames from './utils/classNames.js';
 
 import repositoriesMock from './tests/mocks/repositories.js';
 
@@ -43,7 +44,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { organization, currentReposPage } = this.state;
-    this.getOrgRepos(organization || 'netflix', currentReposPage);
+    this.getOrgRepos(organization || 'microsoft', currentReposPage);
   }
 
   getOrgRepos(orgName, page) {
@@ -197,6 +198,10 @@ class App extends React.Component {
         {/*  currentRadioSelected={currentRadioSelected}*/}
         {/*/>*/}
         <RepositoriesList
+          className={classNames({
+            'App-table': !currentCommitsList.length,
+            'App-table-collapse': currentCommitsList.length,
+          })}
           sortedBy={currentRadioSelected}
           reposSortedDesc={reposSortedDesc}
           items={repositories}
@@ -208,7 +213,9 @@ class App extends React.Component {
           onPaginationClick={this.getOrgRepos}
           organization={organization}
         />
-        <CommitsList items={currentCommitsList} />
+        <CommitsList className={classNames("App-table-collapse", {
+          hidden: !currentCommitsList.length
+        })} items={currentCommitsList} />
       </div>
     );
   }

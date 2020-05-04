@@ -23,6 +23,10 @@ class LRUCache {
     }, this.invalidationTimer);
   }
 
+  size() {
+    return this.initialCapacity - this.capacity;
+  }
+
   get(key) {
     let node = this.hash[key];
     if (node) {

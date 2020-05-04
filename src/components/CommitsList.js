@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import classNames from '../utils/classNames'
 import dataAdapter from '../utils/commitDataAdapter.js';
 
-const CommitsList = ({ items }) => {
+const CommitsList = ({ items, className }) => {
   return (
-    <ul>
+    <ul className={classNames(className, 'commitsList')}>
       {items.map((item) => {
         const { author, commit } = dataAdapter(item);
         return (
@@ -41,5 +43,15 @@ const CommitsList = ({ items }) => {
     </ul>
   );
 };
+
+CommitsList.propTypes = {
+  items: PropTypes.array,
+  className: PropTypes.string
+}
+
+CommitsList.defaultProps = {
+  items: [],
+  className: ''
+}
 
 export default CommitsList;
