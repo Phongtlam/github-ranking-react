@@ -23,6 +23,7 @@ class Fetch {
       })
       .catch((error) => {
         // error logging
+        console.log(error)
       });
   }
 }

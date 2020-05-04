@@ -28,35 +28,59 @@ class App extends React.Component {
     this.state = { ...initialState };
 
     this.commits = new LRUCache(10, 900000);
+    this.reposPages = new LRUCache(10, 900000);
     this.onRadioClick = this.onRadioClick.bind(this);
     this.getRepoCommits = this.getRepoCommits.bind(this);
   }
 
   componentDidMount() {
-    this.getOrgRepos();
+    const { organization, currentReposPage } = this.state;
+    this.getOrgRepos(organization, currentReposPage);
   }
 
-  getOrgRepos() {
-    const { organization, currentReposPage } = this.state;
-    fetch
-      .get({
-        type: get.ALL_REPOS,
-        query: {
-          orgName: organization,
-          page: currentReposPage,
-        },
-      })
-      .then(({ data, totalPage } = {}) => {
-        this.commits = new LRUCache(10, 900000);
-        if (Array.isArray(data)) {
-          data.sort((a, b) => b.forks_count - a.forks_count);
-          this.setState({
-            ...initialState,
-            repositories: data,
-            totalRepoPage: totalPage,
-          });
-        }
+  getOrgRepos(orgName, page) {
+    const { organization } = this.state;
+    const reposPageContent = this.reposPages.get(page);
+
+    if (organization !== orgName || !reposPageContent) {
+      fetch
+        .get({
+          type: get.ALL_REPOS,
+          query: {
+            orgName,
+            page,
+          },
+        })
+        .then(response => {
+          if (!response) return;
+          const { data, totalPage } = response;
+          if (Array.isArray(data)) {
+            let newState = {};
+            if (organization !== orgName) {
+              this.commits = new LRUCache(10, 900000);
+              this.reposPages = new LRUCache(10, 900000);
+              newState = { ...initialState };
+            }
+            newState = {
+              ...newState,
+              repositories: data.sort((a, b) => b.forks_count - a.forks_count),
+              totalRepoPage: totalPage,
+              organization: orgName,
+              currentReposPage: page
+            };
+            this.setState(newState, () => {
+              this.reposPages.put(page, data)
+            });
+          }
+        });
+    } else {
+      this.setState({
+        repositories: reposPageContent.sort((a, b) => b.forks_count - a.forks_count),
+        currentReposPage: page
+      }, () => {
+        this.reposPages.put(page, reposPageContent)
       });
+    }
   }
 
   onRadioClick(ev) {
@@ -105,14 +129,25 @@ class App extends React.Component {
   }
 
   _renderLoadMoreRepos() {
-    const { totalRepoPage, currentReposPage } = this.state;
+    const { totalRepoPage, currentReposPage, organization } = this.state;
     return (
       totalRepoPage > currentReposPage && (
-        <Button>
-          <span>Load More &#8250;</span>
+        <Button onClick={() => this.getOrgRepos(organization, currentReposPage + 1)}>
+          <span>Next Page <i className="fa fa-chevron-right" /></span>
         </Button>
       )
     );
+  }
+
+  _renderGoBackPage() {
+    const { currentReposPage, organization } = this.state;
+    return (
+      currentReposPage > 1 && (
+        <Button onClick={() => this.getOrgRepos(organization, currentReposPage - 1)}>
+          <span><i className="fa fa-chevron-left" /> Last Page</span>
+        </Button>
+      )
+    )
   }
 
   render() {
@@ -135,6 +170,7 @@ class App extends React.Component {
           items={repositories}
           onRepoClick={this.getRepoCommits}
         />
+        {this._renderGoBackPage()}
         <span>
           Page {currentReposPage} / {totalRepoPage}
         </span>
