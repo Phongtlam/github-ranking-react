@@ -35,14 +35,26 @@ class RepositoriesList extends React.Component {
     return (
       <div className="list-content-row-data">
         <div className="list-content-row-data-child">
-          <span className="list-content-row-data-child-span"><b>Full Name:</b> {item.full_name}</span>
-          <span className="list-content-row-data-child-span"><b>License:</b> {item.license}</span>
-          <span className="list-content-row-data-child-span"><b>Created:</b> {item.created_at_readable}</span>
-          <span className="list-content-row-data-child-span"><b>Updated:</b> {item.updated_at_readable}</span>
+          <span className="list-content-row-data-child-span">
+            <b>Full Name:</b> {item.full_name}
+          </span>
+          <span className="list-content-row-data-child-span">
+            <b>License:</b> {item.license}
+          </span>
+          <span className="list-content-row-data-child-span">
+            <b>Created:</b> {item.created_at_readable}
+          </span>
+          <span className="list-content-row-data-child-span">
+            <b>Updated:</b> {item.updated_at_readable}
+          </span>
         </div>
         <div className="list-content-row-data-child">
-          <span><b>Language:</b> {item.language}</span>
-          <span><b>Open Issues:</b> {item.open_issues_count}</span>
+          <span>
+            <b>Language:</b> {item.language}
+          </span>
+          <span>
+            <b>Open Issues:</b> {item.open_issues_count}
+          </span>
         </div>
         <div className="list-content-row-data-child repositories-list-content-row-data-child-description">
           <b>Description:</b> {item.description}
@@ -64,10 +76,10 @@ class RepositoriesList extends React.Component {
       currentReposPage,
       totalReposPage,
       onPaginationClick,
-      className
+      className,
     } = this.props;
     return (
-      <ul className={classNames(className, "repositories-list-container")}>
+      <ul className={classNames(className, 'repositories-list-container')}>
         <header className="repositories-list repositories-list-header">
           {headers.map((label) => {
             return (
@@ -96,10 +108,13 @@ class RepositoriesList extends React.Component {
           {items.map((item) => (
             <li
               onClick={() => {
-                onRepoClick(orgName, item.name);
+                onRepoClick(orgName, item.name, {
+                  full_name: item.full_name,
+                  html_url: item.html_url,
+                });
                 this._onRowClick(item.id);
               }}
-              className='list-li'
+              className="list-li"
               key={item.id}
             >
               <span className="list-content">
@@ -183,7 +198,7 @@ RepositoriesList.propTypes = {
   onRepoClick: PropTypes.func,
   onPaginationClick: PropTypes.func,
   organization: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 RepositoriesList.defaultProps = {
@@ -191,7 +206,7 @@ RepositoriesList.defaultProps = {
   onRepoClick: () => {},
   onPaginationClick: () => {},
   organization: '',
-  className: ''
+  className: '',
 };
 
 export default RepositoriesList;

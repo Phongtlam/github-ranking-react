@@ -26,6 +26,7 @@ const initialState = {
   repositories: [],
   // repositories: repositoriesMock.map(el => repoDataAdapter(el)),
   currentCommitsList: [],
+  currentCommitRepoSelected: {},
   // currentCommitsList: commitsMock,
   radioGroup: [radioEnums.UPDATED_AT, radioEnums.FORKS, radioEnums.STARS],
   currentRadioSelected: radioEnums.UPDATED_AT,
@@ -60,7 +61,6 @@ class App extends React.Component {
           query: {
             orgName,
             page,
-            // 'per_page': 100,
             sort: 'updated',
           },
         })
@@ -127,12 +127,13 @@ class App extends React.Component {
     }
   }
 
-  getRepoCommits(orgName, repoName) {
+  getRepoCommits(orgName, repoName, repoData) {
     const { organization } = this.state;
     const commitsList = this.commits.get(repoName);
     if (commitsList && orgName === organization) {
       this.setState({
         currentCommitsList: commitsList,
+        currentCommitRepoSelected: repoData,
       });
     } else {
       fetch
@@ -149,6 +150,7 @@ class App extends React.Component {
           this.setState(
             {
               currentCommitsList: data,
+              currentCommitRepoSelected: repoData,
             },
             () => {
               this.commits.put(repoName, data);
@@ -184,21 +186,16 @@ class App extends React.Component {
   render() {
     const {
       repositories,
-      radioGroup,
       currentRadioSelected,
       currentReposPage,
       totalReposPage,
       currentCommitsList,
       organization,
       reposSortedDesc,
+      currentCommitRepoSelected,
     } = this.state;
     return (
       <div className="App" id="App">
-        {/*<RadioGroup*/}
-        {/*  radioGroup={radioGroup}*/}
-        {/*  onChangeHandler={this.onRadioClick}*/}
-        {/*  currentRadioSelected={currentRadioSelected}*/}
-        {/*/>*/}
         <RepositoriesList
           className={classNames({
             'App-table': !currentCommitsList.length,
@@ -215,9 +212,29 @@ class App extends React.Component {
           onPaginationClick={this.getOrgRepos}
           organization={organization}
         />
-        <CommitsList className={classNames("App-table-collapse", {
-          hidden: !currentCommitsList.length
-        })} items={currentCommitsList} />
+        <div
+          className={classNames('App-table-collapse', {
+            hidden: !currentCommitsList.length,
+          })}
+        >
+          {currentCommitsList.length ? (
+            <Button
+              onClick={() => {
+                this.setState({
+                  currentCommitsList: [],
+                });
+              }}
+              className="close-commits-list"
+            >
+              <i className="fa fa-times" aria-hidden="true" />
+            </Button>
+          ) : null}
+          <CommitsList
+            className="commitsList-table"
+            currentCommitRepoSelected={currentCommitRepoSelected}
+            items={currentCommitsList}
+          />
+        </div>
       </div>
     );
   }

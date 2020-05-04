@@ -24,6 +24,12 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier",
+      "pre-push": "npm test"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -37,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "prettier": "^2.0.5"
   }
 }

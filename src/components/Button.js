@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import classNames from '../utils/classNames.js';
 
 const Button = ({ className, children, onClick, ...extraProps }) => (
-  <button className={classNames('button', className)} {...extraProps} onClick={onClick}>
+  <button
+    className={classNames('button', className)}
+    {...extraProps}
+    onClick={onClick}
+  >
     {children}
   </button>
 );

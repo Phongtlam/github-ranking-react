@@ -14,10 +14,14 @@ export default (data) => {
     commit: {
       message: commit.message,
       commitUrl: data.html_url,
-      parents: data.parents,
+      parents: data.parents || [],
       sha: data.sha,
-      verified: !!(data.commit && data.commit.verification && data.commit.verification.verified),
-      date: getCommitDate && new Date(getCommitDate).toDateString()
+      verified: !!(
+        data.commit &&
+        data.commit.verification &&
+        data.commit.verification.verified
+      ),
+      date: getCommitDate && new Date(getCommitDate).toDateString(),
     },
   };
 };

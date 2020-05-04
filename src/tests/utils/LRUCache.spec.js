@@ -32,5 +32,5 @@ describe('LRUCache', () => {
     setTimeout(() => {
       expect(cache.get(1)).toBe(null);
     }, 200);
-  })
-})
+  });
+});
