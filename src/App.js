@@ -9,6 +9,7 @@ import radioEnums from './enums/radioGroup.js';
 import Button from './components/Button';
 import CommitsList from './components/CommitsList';
 import LRUCache from './utils/dataStructure/LRUCache.js';
+import repoDataAdapter from './utils/repoDataAdapter.js'
 
 const initialState = {
   organization: '',
@@ -18,8 +19,8 @@ const initialState = {
   currentCommitsPage: 1,
   repositories: [],
   currentCommitsList: [],
-  radioGroup: [radioEnums.FORKS, radioEnums.STARS],
-  currentRadioSelected: radioEnums.FORKS,
+  radioGroup: [radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT],
+  currentRadioSelected: radioEnums.UPDATED_AT,
 };
 
 class App extends React.Component {
@@ -50,7 +51,6 @@ class App extends React.Component {
             orgName,
             page,
             // 'per_page': 100,
-            // 'sort': 'updated'
             sort: 'updated'
           },
         })
@@ -58,6 +58,7 @@ class App extends React.Component {
           if (!response) return;
           const { data, totalPage } = response;
           if (Array.isArray(data)) {
+            const adaptedData = data.map(el => repoDataAdapter(el));
             let newState = {};
             if (organization !== orgName) {
               this.commits = new LRUCache(10, 900000);
@@ -69,18 +70,18 @@ class App extends React.Component {
             }
             newState = {
               ...newState,
-              repositories: data.sort((a, b) => b.forks_count - a.forks_count),
+              repositories: adaptedData.sort((a, b) => b[radioEnums.UPDATED_AT] - a[radioEnums.UPDATED_AT]),
               organization: orgName,
               currentReposPage: page
             };
             this.setState(newState, () => {
-              this.reposPages.put(page, data)
+              this.reposPages.put(page, adaptedData)
             });
           }
         });
     } else {
       this.setState({
-        repositories: reposPageContent.sort((a, b) => b.forks_count - a.forks_count),
+        repositories: reposPageContent.sort((a, b) => b[radioEnums.UPDATED_AT] - a[radioEnums.UPDATED_AT]),
         currentReposPage: page
       }, () => {
         this.reposPages.put(page, reposPageContent)
