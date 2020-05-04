@@ -11,7 +11,7 @@ import CommitsList from './components/CommitsList';
 import LRUCache from './utils/dataStructure/LRUCache.js';
 
 const initialState = {
-  organization: 'microsoft',
+  organization: '',
   totalReposPage: 1,
   currentReposPage: 1,
   totalCommitsPage: 1,
@@ -35,7 +35,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { organization, currentReposPage } = this.state;
-    this.getOrgRepos(organization, currentReposPage);
+    this.getOrgRepos(organization || 'netflix', currentReposPage);
   }
 
   getOrgRepos(orgName, page) {
@@ -59,12 +59,14 @@ class App extends React.Component {
             if (organization !== orgName) {
               this.commits = new LRUCache(10, 900000);
               this.reposPages = new LRUCache(10, 900000);
-              newState = { ...initialState };
+              newState = {
+                ...initialState,
+                totalPage
+              };
             }
             newState = {
               ...newState,
               repositories: data.sort((a, b) => b.forks_count - a.forks_count),
-              totalRepoPage: totalPage,
               organization: orgName,
               currentReposPage: page
             };
@@ -133,7 +135,7 @@ class App extends React.Component {
     return (
       totalRepoPage > currentReposPage && (
         <Button onClick={() => this.getOrgRepos(organization, currentReposPage + 1)}>
-          <span>Next Page <i className="fa fa-chevron-right" /></span>
+          <span>Next <i className="fa fa-chevron-right" /></span>
         </Button>
       )
     );
@@ -144,7 +146,7 @@ class App extends React.Component {
     return (
       currentReposPage > 1 && (
         <Button onClick={() => this.getOrgRepos(organization, currentReposPage - 1)}>
-          <span><i className="fa fa-chevron-left" /> Last Page</span>
+          <span><i className="fa fa-chevron-left" /> Last</span>
         </Button>
       )
     )
@@ -160,7 +162,7 @@ class App extends React.Component {
       currentCommitsList,
     } = this.state;
     return (
-      <div className="App">
+      <div className="App" id="App">
         <RadioGroup
           radioGroup={radioGroup}
           onChangeHandler={this.onRadioClick}
