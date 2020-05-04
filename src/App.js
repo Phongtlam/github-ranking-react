@@ -61,7 +61,7 @@ class App extends React.Component {
               this.reposPages = new LRUCache(10, 900000);
               newState = {
                 ...initialState,
-                totalPage
+                totalReposPage: totalPage
               };
             }
             newState = {
@@ -131,9 +131,9 @@ class App extends React.Component {
   }
 
   _renderLoadMoreRepos() {
-    const { totalRepoPage, currentReposPage, organization } = this.state;
+    const { totalReposPage, currentReposPage, organization } = this.state;
     return (
-      totalRepoPage > currentReposPage && (
+      totalReposPage > currentReposPage && (
         <Button onClick={() => this.getOrgRepos(organization, currentReposPage + 1)}>
           <span>Next <i className="fa fa-chevron-right" /></span>
         </Button>
@@ -158,7 +158,7 @@ class App extends React.Component {
       radioGroup,
       currentRadioSelected,
       currentReposPage,
-      totalRepoPage,
+      totalReposPage,
       currentCommitsList,
     } = this.state;
     return (
@@ -174,7 +174,7 @@ class App extends React.Component {
         />
         {this._renderGoBackPage()}
         <span>
-          Page {currentReposPage} / {totalRepoPage}
+          Page {currentReposPage} / {totalReposPage}
         </span>
         {this._renderLoadMoreRepos()}
         <CommitsList items={currentCommitsList} />
