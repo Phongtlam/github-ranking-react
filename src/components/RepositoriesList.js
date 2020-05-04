@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 import Button from '../components/Button.js';
 
-const RepositoriesList = ({ items, onRepoClick }) => {
+const RepositoriesList = ({ items, onRepoClick, orgName }) => {
   console.log('what is items', items);
   return (
     <ul>
       {items.map((item) => (
         <li key={item.id}>
-          <Button onClick={() => onRepoClick(item.name)}>
+          <Button onClick={() => onRepoClick(orgName, item.name)}>
             <span>{item.name}</span>
             <span>
               <i className="fa fa-code-fork">{item.forks_count}</i>

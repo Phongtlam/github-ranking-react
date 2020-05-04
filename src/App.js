@@ -49,6 +49,7 @@ class App extends React.Component {
           query: {
             orgName,
             page,
+            // 'per_page': 100
           },
         })
         .then(response => {
@@ -102,10 +103,10 @@ class App extends React.Component {
     }
   }
 
-  getRepoCommits(repoName) {
+  getRepoCommits(orgName, repoName) {
+    const { organization } = this.state;
     const commitsList = this.commits.get(repoName);
-    console.log(this.commits)
-    if (commitsList) {
+    if (commitsList && orgName === organization) {
       this.setState({
         currentCommitsList: commitsList
       })
@@ -160,6 +161,7 @@ class App extends React.Component {
       currentReposPage,
       totalReposPage,
       currentCommitsList,
+      organization
     } = this.state;
     return (
       <div className="App" id="App">
@@ -170,6 +172,7 @@ class App extends React.Component {
         />
         <RepositoriesList
           items={repositories}
+          orgName={organization}
           onRepoClick={this.getRepoCommits}
         />
         {this._renderGoBackPage()}
