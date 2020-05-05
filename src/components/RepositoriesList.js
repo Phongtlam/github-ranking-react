@@ -208,7 +208,12 @@ RepositoriesList.propTypes = {
   organization: PropTypes.string,
   className: PropTypes.string,
   reposSortedDesc: PropTypes.bool,
-  sortedBy: PropTypes.oneOf([radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT, radioEnums.NAME]),
+  sortedBy: PropTypes.oneOf([
+    radioEnums.FORKS,
+    radioEnums.STARS,
+    radioEnums.UPDATED_AT,
+    radioEnums.NAME,
+  ]),
   onTableHeaderClick: PropTypes.func,
   currentReposPage: PropTypes.number,
   totalReposPage: PropTypes.number,
@@ -224,7 +229,7 @@ RepositoriesList.defaultProps = {
   sortBy: radioEnums.UPDATED_AT,
   onTableHeaderClick: () => {},
   currentReposPage: 1,
-  totalReposPage: 1
+  totalReposPage: 1,
 };
 
 export default RepositoriesList;

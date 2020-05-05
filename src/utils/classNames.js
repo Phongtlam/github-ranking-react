@@ -1,3 +1,8 @@
+/**
+ * classNames builder util
+ * @param args {string|Object} - concatenate strings and merge class objects
+ * @returns {string}
+ */
 export default (...args) => {
   let res = [];
   for (let i = 0; i < args.length; i++) {
