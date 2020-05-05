@@ -5,6 +5,13 @@ class Fetch {
     this.serverUrl = 'http://localhost:3001';
   }
 
+  /**
+   * get fetch
+   * @param type {string} - fetch for commits or organizations repos... etc
+   * @param query {object} - query params, in object form
+   * @param options {object} - extra options to pass through query
+   * @returns {Promise<any>}
+   */
   get({ type, query = {} }, options = {}) {
     options = {
       method: 'GET',

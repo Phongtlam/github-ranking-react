@@ -11,6 +11,10 @@ class LRUCache {
     this.invalidateCache();
   }
 
+  /**
+   * cache invalidation function
+   * if need to invalidate with different timer, need to rebuild new cache
+   */
   invalidateCache() {
     if (!this.invalidationTimer) return;
     setInterval(() => {
@@ -23,10 +27,19 @@ class LRUCache {
     }, this.invalidationTimer);
   }
 
+  /**
+   * check size of the current cache
+   * @returns {number}
+   */
   size() {
     return this.initialCapacity - this.capacity;
   }
 
+  /**
+   * get method by key
+   * @param key {any} - can be any primitive
+   * @returns {null|*}
+   */
   get(key) {
     let node = this.hash[key];
     if (node) {
@@ -36,6 +49,11 @@ class LRUCache {
     return null;
   }
 
+  /**
+   * put method
+   * @param key {any} - can be any primitive
+   * @param val {any} - can be any primitive or complex structure
+   */
   put(key, val) {
     let node = this.hash[key];
     if (node) {

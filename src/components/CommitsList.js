@@ -15,6 +15,11 @@ class CommitsList extends React.Component {
     };
   }
 
+  /**
+   * on row click call back to open row data
+   * @param sha {string} - sha of a specific commit, used as ID
+   * @private
+   */
   _onRowClick(sha) {
     this.setState({ currentRowSelected: sha });
   }
@@ -84,7 +89,9 @@ class CommitsList extends React.Component {
             console.log(commit.verified);
             return (
               <li
-                className="list-li commitList-li"
+                className={classNames('list-li commitList-li', {
+                  active: currentRowSelected === commit.sha,
+                })}
                 key={commit.sha}
                 onClick={() => this._onRowClick(commit.sha)}
               >

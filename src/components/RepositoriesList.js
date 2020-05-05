@@ -27,6 +27,11 @@ class RepositoriesList extends React.Component {
     };
   }
 
+  /**
+   * on row click callback to open row data
+   * @param rowId {number} - repo id
+   * @private
+   */
   _onRowClick(rowId) {
     this.setState({ currentRowSelected: rowId });
   }
@@ -69,6 +74,7 @@ class RepositoriesList extends React.Component {
       items,
       onRepoClick,
       orgName,
+      className,
       organization,
       reposSortedDesc,
       sortedBy,
@@ -76,7 +82,6 @@ class RepositoriesList extends React.Component {
       currentReposPage,
       totalReposPage,
       onPaginationClick,
-      className,
     } = this.props;
     return (
       <ul className={classNames(className, 'repositories-list-container')}>
@@ -105,7 +110,7 @@ class RepositoriesList extends React.Component {
           })}
         </header>
         <div className="list-body">
-          {items.map((item) => (
+          {items.map((item, idx) => (
             <li
               onClick={() => {
                 onRepoClick(orgName, item.name, {
@@ -114,10 +119,13 @@ class RepositoriesList extends React.Component {
                 });
                 this._onRowClick(item.id);
               }}
-              className="list-li"
+              className={classNames('list-li', {
+                active: currentRowSelected === item.id,
+              })}
               key={item.id}
             >
               <span className="list-content">
+                <span className="list-content-counter">{idx + 1}.</span>
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
@@ -127,7 +135,7 @@ class RepositoriesList extends React.Component {
                 </a>
               </span>
               <span className="list-content">
-                <i className="fa fa-code-fork"> {item.forks_count}</i>
+                <i className="fa fa-code-fork" /> {item.forks_count}
               </span>
               <span className="list-content">
                 &#9733; {item.stargazers_count}
@@ -199,6 +207,11 @@ RepositoriesList.propTypes = {
   onPaginationClick: PropTypes.func,
   organization: PropTypes.string,
   className: PropTypes.string,
+  reposSortedDesc: PropTypes.bool,
+  sortedBy: PropTypes.oneOf([radioEnums.FORKS, radioEnums.STARS, radioEnums.UPDATED_AT, radioEnums.NAME]),
+  onTableHeaderClick: PropTypes.func,
+  currentReposPage: PropTypes.number,
+  totalReposPage: PropTypes.number,
 };
 
 RepositoriesList.defaultProps = {
@@ -207,6 +220,11 @@ RepositoriesList.defaultProps = {
   onPaginationClick: () => {},
   organization: '',
   className: '',
+  reposSortedDesc: true,
+  sortBy: radioEnums.UPDATED_AT,
+  onTableHeaderClick: () => {},
+  currentReposPage: 1,
+  totalReposPage: 1
 };
 
 export default RepositoriesList;

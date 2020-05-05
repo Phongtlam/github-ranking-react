@@ -50,6 +50,12 @@ class App extends React.Component {
     this.getOrgRepos(organization || 'netflix', currentReposPage);
   }
 
+  /**
+   * get organization repos by org name and page number
+   * it will try to get from the FE cache first, if does not exist, will send fetch query
+   * @param orgName {string}
+   * @param page {number}
+   */
   getOrgRepos(orgName, page) {
     const { organization, reposSortedDesc } = this.state;
     const reposPageContent = this.reposPages.get(page);
@@ -110,6 +116,10 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * deprecated code used for radio buttons
+   * @param ev {Event} - on radio click event call back, check event value
+   */
   onRadioClick(ev) {
     const { repositories, currentRadioSelected } = this.state;
     const changeValue = ev && ev.target && ev.target.value;
@@ -127,6 +137,12 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * get repo commits by organization name, repo name and repoData
+   * @param orgName {string}
+   * @param repoName {string}
+   * @param repoData {object}
+   */
   getRepoCommits(orgName, repoName, repoData) {
     const { organization } = this.state;
     const commitsList = this.commits.get(repoName);
@@ -160,10 +176,14 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * table header click to sort repositories
+   * can sort by a variety of property
+   * double click will cause sorting ascending vs descending
+   * @param sortBy {string}
+   */
   onTableHeaderClick(sortBy) {
     const { repositories, currentRadioSelected, reposSortedDesc } = this.state;
-    // if (sortBy !== currentRadioSelected) {
-    // }
     this.setState(
       {
         reposSortedDesc:
