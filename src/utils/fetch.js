@@ -2,7 +2,7 @@ import queryBuilder from './queryParamsBuilder.js';
 
 class Fetch {
   constructor() {
-    this.serverUrl = 'http://localhost:3001';
+    this.serverUrl = process.env.SERVER_URL || 'http://localhost:3000';
   }
 
   /**
