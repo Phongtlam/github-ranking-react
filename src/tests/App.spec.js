@@ -36,7 +36,7 @@ describe('App', () => {
       currentCommitRepoSelected: {},
       reposSortedDesc: true,
       radioGroup: [radioEnums.UPDATED_AT, radioEnums.FORKS, radioEnums.STARS],
-      currentRadioSelected: radioEnums.UPDATED_AT,
+      currentRadioSelected: radioEnums.STARS,
     });
   });
 

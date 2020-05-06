@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 
 import RepositoriesList from './components/RepositoriesList.js';
-import RadioGroup from './components/RadioGroup.js';
 import fetch from './utils/fetch.js';
 import { get } from './enums/fetch.js';
 import radioEnums from './enums/radioGroup.js';
@@ -13,8 +12,6 @@ import repoDataAdapter from './utils/repoDataAdapter.js';
 import sortByUtil from './utils/sortBy.js';
 import classNames from './utils/classNames.js';
 
-import repositoriesMock from './tests/mocks/repositories.js';
-import commitsMock from './tests/mocks/commits.js';
 import Search from './components/Search';
 
 const initialState = {

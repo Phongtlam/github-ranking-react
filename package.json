@@ -1,4 +1,5 @@
 {
+  "homepage": "https://Phongtlam.github.io/github-ranking-react",
   "name": "github-viewer-react",
   "version": "0.1.0",
   "private": true,
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "husky": "^4.2.5",
     "prettier": "^2.0.5"
   }
