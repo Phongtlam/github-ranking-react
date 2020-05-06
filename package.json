@@ -1,5 +1,5 @@
 {
-  "name": "github-ranking-react",
+  "name": "github-viewer-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,12 +15,14 @@
     "react-test-renderer": "^16.13.1"
   },
   "scripts": {
-    "dev": "PORT=3001 react-scripts start",
-    "start": "react-scripts start",
+    "dev": "REACT_APP_ENVIRONMENT=development PORT=3001 react-scripts start",
+    "start": "REACT_APP_ENVIRONMENT=production PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "./node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx}'"
+    "prettier": "./node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx}'",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -2,7 +2,10 @@ import queryBuilder from './queryParamsBuilder.js';
 
 class Fetch {
   constructor() {
-    this.serverUrl = process.env.SERVER_URL || 'http://localhost:3000';
+    this.serverUrl = 'http://localhost:3000';
+    if (process.env.REACT_APP_ENVIRONMENT === 'production') {
+      this.serverUrl = 'https://github-viewer-server.herokuapp.com';
+    }
   }
 
   /**
