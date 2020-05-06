@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dabcf747384d6050d69d243eda6870d1",
+    "revision": "0c940766850e2582f198901b9e51b515",
     "url": "/github-ranking-react/index.html"
   },
   {
-    "revision": "38446ebc6dc64d69ec56",
+    "revision": "e55fdb36cf33656845fd",
     "url": "/github-ranking-react/static/css/2.94a4212d.chunk.css"
   },
   {
-    "revision": "5cf7e7e723e80615709f",
-    "url": "/github-ranking-react/static/css/main.c26cdb89.chunk.css"
+    "revision": "98f887cca87609123d72",
+    "url": "/github-ranking-react/static/css/main.032aca69.chunk.css"
   },
   {
-    "revision": "38446ebc6dc64d69ec56",
-    "url": "/github-ranking-react/static/js/2.3b16981c.chunk.js"
+    "revision": "e55fdb36cf33656845fd",
+    "url": "/github-ranking-react/static/js/2.0d3cc9f4.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/github-ranking-react/static/js/2.3b16981c.chunk.js.LICENSE.txt"
+    "url": "/github-ranking-react/static/js/2.0d3cc9f4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5cf7e7e723e80615709f",
-    "url": "/github-ranking-react/static/js/main.ddc6aed3.chunk.js"
+    "revision": "98f887cca87609123d72",
+    "url": "/github-ranking-react/static/js/main.eed87b6e.chunk.js"
   },
   {
     "revision": "289ef6ef00285a2e2210",
