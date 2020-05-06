@@ -1,3 +1,5 @@
+import getReadableDate from './getReadableDate.js';
+
 export default (data) => ({
   id: data.id,
   name: data.name,
@@ -8,9 +10,9 @@ export default (data) => ({
   updated_at: data.updated_at,
   full_name: data.full_name,
   updated_at_integer: new Date(data.updated_at).getTime(),
-  updated_at_readable: new Date(data.updated_at).toDateString(),
-  created_at_readable: new Date(data.created_at).toDateString(),
-  pushed_at_readable: new Date(data.pushed_at).toDateString(),
+  updated_at_readable: getReadableDate(data.updated_at),
+  created_at_readable: getReadableDate(data.created_at),
+  pushed_at_readable: getReadableDate(data.pushed_at),
   language: data.language,
   open_issues_count: data.open_issues_count,
   license: data.license && data.license.name,

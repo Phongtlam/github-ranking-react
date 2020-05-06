@@ -38,7 +38,7 @@ class RepositoriesList extends React.Component {
 
   _renderCurrentRowData(item) {
     return (
-      <div className="list-content-row-data">
+      <div className="list-content-row-data list-content-info">
         <div className="list-content-row-data-child">
           <span className="list-content-row-data-child-span">
             <b>Full Name:</b> {item.full_name}
@@ -82,6 +82,7 @@ class RepositoriesList extends React.Component {
       currentReposPage,
       totalReposPage,
       onPaginationClick,
+      isMobile
     } = this.props;
     return (
       <ul className={classNames(className, 'repositories-list-container')}>
@@ -124,33 +125,36 @@ class RepositoriesList extends React.Component {
               })}
               key={item.id}
             >
-              <span className="list-content">
-                <span className="list-content-counter">{idx + 1}.</span>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={item.html_url}
-                >
-                  {item.name}
-                </a>
-              </span>
-              <span className="list-content">
-                <i className="fa fa-code-fork" /> {item.forks_count}
-              </span>
-              <span className="list-content">
-                &#9733; {item.stargazers_count}
-              </span>
-              <span>
-                <i className="fa fa-calendar" aria-hidden="true" />{' '}
-                {item.updated_at_readable}
-              </span>
+              <div className="list-content-main">
+                <span className="list-content">
+                  <span className="list-content-counter">{idx + 1}.</span>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={item.html_url}
+                  >
+                    {item.name}
+                  </a>
+                </span>
+                <span className="list-content">
+                  <i className="fa fa-code-fork" /> {item.forks_count}
+                </span>
+                <span className="list-content">
+                  &#9733; {item.stargazers_count}
+                </span>
+                <span>
+                  <i className="fa fa-calendar" aria-hidden="true" />{' '}
+                  {item.updated_at_readable}
+                </span>
+
+              </div>
               {currentRowSelected === item.id &&
                 this._renderCurrentRowData(item)}
             </li>
           ))}
         </div>
         <footer className="repositories-list list-footer">
-          <div className="list-footer-pagination">
+          <div className={classNames("list-footer-pagination", { 'full-width': isMobile })}>
             {currentReposPage > 1 ? (
               <Button
                 className="list-footer-pagination-button"
@@ -186,9 +190,11 @@ class RepositoriesList extends React.Component {
           <span className="list-footer-pagination-page organization-name">
             <b>ORG: {organization.toUpperCase()}</b>
           </span>
-          <span className="list-footer-pagination-page">
-            <b>{items.length}</b> Repositories per Page (Scroll to see more)
-          </span>
+          {!isMobile && (
+            <span className="list-footer-pagination-page">
+              <b>{items.length}</b> Repositories per Page (Scroll to see more)
+            </span>
+          )}
         </footer>
       </ul>
     );
@@ -220,6 +226,7 @@ RepositoriesList.propTypes = {
   onTableHeaderClick: PropTypes.func,
   currentReposPage: PropTypes.number,
   totalReposPage: PropTypes.number,
+  isMobile: PropTypes.bool
 };
 
 RepositoriesList.defaultProps = {
@@ -233,6 +240,7 @@ RepositoriesList.defaultProps = {
   onTableHeaderClick: () => {},
   currentReposPage: 1,
   totalReposPage: 1,
+  isMobile: false
 };
 
 export default RepositoriesList;

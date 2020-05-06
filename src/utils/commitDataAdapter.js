@@ -1,3 +1,5 @@
+import getReadableDate from './getReadableDate.js';
+
 export default (data) => {
   const author = (data && data.author) || {};
   const commit = (data && data.commit) || {};
@@ -21,7 +23,7 @@ export default (data) => {
         data.commit.verification &&
         data.commit.verification.verified
       ),
-      date: getCommitDate && new Date(getCommitDate).toDateString(),
+      date: getCommitDate && getReadableDate(getCommitDate),
     },
   };
 };

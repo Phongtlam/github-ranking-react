@@ -15,6 +15,7 @@ import classNames from './utils/classNames.js';
 import Search from './components/Search';
 
 const initialState = {
+  isMobile: false,
   organization: '',
   totalReposPage: 1,
   currentReposPage: 1,
@@ -45,7 +46,18 @@ class App extends React.Component {
 
   componentDidMount() {
     const { organization, currentReposPage } = this.state;
-    this.getOrgRepos(organization || 'netflix', currentReposPage);
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize(() => {
+      console.log('start')
+    });
+      this.getOrgRepos(organization || 'netflix', currentReposPage);
+  }
+
+  resize() {
+    let isMobile = (window.innerWidth <= 920);
+    if (isMobile !== this.state.isMobile) {
+      this.setState({ isMobile: isMobile });
+    }
   }
 
   /**
@@ -96,10 +108,11 @@ class App extends React.Component {
               organization: searchOrgName,
               currentReposPage: page,
               reposSortedDesc,
-              currentRadioSelected,
+              currentRadioSelected
             };
             this.setState(newState, () => {
               this.reposPages.put(page, adaptedData);
+              this.resize();
             });
           }
         });
@@ -217,16 +230,22 @@ class App extends React.Component {
       organization,
       reposSortedDesc,
       currentCommitRepoSelected,
+      isMobile
     } = this.state;
     return (
       <div className="App" id="App">
         <Search onSubmit={this.getOrgRepos} />
-        <div className="App-tables-container">
+        <div
+          className={classNames("App-tables-container", {
+            isMobile
+          })}
+        >
           <RepositoriesList
             className={classNames({
-              'App-table': !currentCommitsList.length,
-              'App-table-collapse': currentCommitsList.length,
+              'App-table': isMobile || !currentCommitsList.length,
+              'App-table-collapse': !isMobile && currentCommitsList.length,
             })}
+            isMobile={isMobile}
             sortedBy={currentRadioSelected}
             reposSortedDesc={reposSortedDesc}
             items={repositories}
@@ -239,11 +258,13 @@ class App extends React.Component {
             organization={organization}
           />
           <div
-            className={classNames('App-table-collapse', {
+            className={classNames({
+              'App-table': isMobile || !currentCommitsList.length,
+              'App-table-collapse': !isMobile && currentCommitsList.length,
               hidden: !currentCommitsList.length,
             })}
           >
-            {currentCommitsList.length ? (
+            {currentCommitsList.length && !isMobile ? (
               <Button
                 onClick={() => {
                   this.setState({
@@ -256,6 +277,7 @@ class App extends React.Component {
               </Button>
             ) : null}
             <CommitsList
+              isMobile={isMobile}
               className="commitsList-table"
               currentCommitRepoSelected={currentCommitRepoSelected}
               items={currentCommitsList}

@@ -26,7 +26,7 @@ class CommitsList extends React.Component {
 
   _renderCurrentRowData({ author, commit }) {
     return (
-      <div className="list-content-row-data">
+      <div className="list-content-row-data list-content-info">
         <div className="list-content-row-data-child">
           <span className="list-content-row-data-child-span">
             <b>Author:</b> {author.name}
@@ -72,7 +72,7 @@ class CommitsList extends React.Component {
 
   render() {
     const { currentRowSelected } = this.state;
-    let { items, className, currentCommitRepoSelected } = this.props;
+    let { items, className, currentCommitRepoSelected, isMobile } = this.props;
     return (
       <ul className={classNames(className, 'commitsList-container')}>
         <header className="commitsList-header">
@@ -86,7 +86,6 @@ class CommitsList extends React.Component {
           {items.map((item) => {
             const adaptedData = dataAdapter(item);
             const { author, commit } = adaptedData;
-            console.log(commit.verified);
             return (
               <li
                 className={classNames('list-li commitList-li', {
@@ -95,41 +94,43 @@ class CommitsList extends React.Component {
                 key={commit.sha}
                 onClick={() => this._onRowClick(commit.sha)}
               >
-                <div className="list-content">
-                  {author.profileUrl ? (
-                    <a
-                      href={author.profileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {author.name}
-                    </a>
-                  ) : (
-                    <span>{author.name}</span>
-                  )}
+                <div className="list-content-main">
+                  <div className="list-content">
+                    {author.profileUrl ? (
+                      <a
+                        href={author.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {author.name}
+                      </a>
+                    ) : (
+                      <span>{author.name}</span>
+                    )}
+                  </div>
+                  <div className="list-content">
+                    <Button title={commit.sha} className="sha-link">
+                      <a
+                        href={commit.commitUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="no-underline"
+                      >
+                        <i className="fa fa-github" aria-hidden="true" />{' '}
+                        {commit.sha && commit.sha.substring(0, 7)}
+                      </a>
+                    </Button>
+                  </div>
+                  <span className={classNames("list-content", { 'text-center': isMobile })}>
+                    {commit.verified && (
+                      <i className={classNames("fa fa-check green-check")} aria-hidden="true" />
+                    )}
+                  </span>
+                  <span className="list-content">
+                    <i className="fa fa-calendar" aria-hidden="true" />{' '}
+                    {commit.date}
+                  </span>
                 </div>
-                <div className="list-content">
-                  <Button title={commit.sha} className="sha-link">
-                    <a
-                      href={commit.commitUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="no-underline"
-                    >
-                      <i className="fa fa-github" aria-hidden="true" />{' '}
-                      {commit.sha && commit.sha.substring(0, 7)}
-                    </a>
-                  </Button>
-                </div>
-                <span className="list-content">
-                  {commit.verified && (
-                    <i className="fa fa-check green-check" aria-hidden="true" />
-                  )}
-                </span>
-                <span className="list-content">
-                  <i className="fa fa-calendar" aria-hidden="true" />{' '}
-                  {commit.date}
-                </span>
                 {currentRowSelected === commit.sha &&
                   this._renderCurrentRowData(adaptedData)}
               </li>
@@ -162,12 +163,14 @@ CommitsList.propTypes = {
   items: PropTypes.array,
   className: PropTypes.string,
   currentCommitRepoSelected: PropTypes.object,
+  isMobile: PropTypes.bool
 };
 
 CommitsList.defaultProps = {
   items: [],
   className: '',
   currentCommitRepoSelected: {},
+  isMobile: false
 };
 
 export default CommitsList;
