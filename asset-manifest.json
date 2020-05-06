@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/github-ranking-react/static/css/main.c26cdb89.chunk.css",
-    "main.js": "/github-ranking-react/static/js/main.5a4bfb47.chunk.js",
-    "main.js.map": "/github-ranking-react/static/js/main.5a4bfb47.chunk.js.map",
+    "main.js": "/github-ranking-react/static/js/main.4a8fbe49.chunk.js",
+    "main.js.map": "/github-ranking-react/static/js/main.4a8fbe49.chunk.js.map",
     "runtime-main.js": "/github-ranking-react/static/js/runtime-main.c83393bb.js",
     "runtime-main.js.map": "/github-ranking-react/static/js/runtime-main.c83393bb.js.map",
     "static/css/2.94a4212d.chunk.css": "/github-ranking-react/static/css/2.94a4212d.chunk.css",
     "static/js/2.3b16981c.chunk.js": "/github-ranking-react/static/js/2.3b16981c.chunk.js",
     "static/js/2.3b16981c.chunk.js.map": "/github-ranking-react/static/js/2.3b16981c.chunk.js.map",
     "index.html": "/github-ranking-react/index.html",
-    "precache-manifest.993dd610393ac8f61f6ff86baf38c406.js": "/github-ranking-react/precache-manifest.993dd610393ac8f61f6ff86baf38c406.js",
+    "precache-manifest.74012ce94a404aa27f4e25c16200fa4e.js": "/github-ranking-react/precache-manifest.74012ce94a404aa27f4e25c16200fa4e.js",
     "service-worker.js": "/github-ranking-react/service-worker.js",
     "static/css/2.94a4212d.chunk.css.map": "/github-ranking-react/static/css/2.94a4212d.chunk.css.map",
     "static/css/main.c26cdb89.chunk.css.map": "/github-ranking-react/static/css/main.c26cdb89.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.94a4212d.chunk.css",
     "static/js/2.3b16981c.chunk.js",
     "static/css/main.c26cdb89.chunk.css",
-    "static/js/main.5a4bfb47.chunk.js"
+    "static/js/main.4a8fbe49.chunk.js"
   ]
 }
