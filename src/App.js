@@ -15,6 +15,7 @@ import classNames from './utils/classNames.js';
 
 import repositoriesMock from './tests/mocks/repositories.js';
 import commitsMock from './tests/mocks/commits.js';
+import Search from "./components/Search";
 
 const initialState = {
   organization: '',
@@ -29,7 +30,7 @@ const initialState = {
   currentCommitRepoSelected: {},
   // currentCommitsList: commitsMock,
   radioGroup: [radioEnums.UPDATED_AT, radioEnums.FORKS, radioEnums.STARS],
-  currentRadioSelected: radioEnums.UPDATED_AT,
+  currentRadioSelected: radioEnums.STARS,
 };
 
 class App extends React.Component {
@@ -56,16 +57,18 @@ class App extends React.Component {
    * @param orgName {string}
    * @param page {number}
    */
-  getOrgRepos(orgName, page) {
-    const { organization, reposSortedDesc } = this.state;
+  getOrgRepos(orgName, page= 1) {
+    const { organization, reposSortedDesc, currentRadioSelected } = this.state;
     const reposPageContent = this.reposPages.get(page);
 
-    if (organization !== orgName || !reposPageContent) {
+    // if new search is initiated, reset app state
+    const searchOrgName = orgName.toLowerCase().split(' ')[0];
+    if (organization !== searchOrgName || !reposPageContent) {
       fetch
         .get({
           type: get.ALL_REPOS,
           query: {
-            orgName,
+            orgName: searchOrgName,
             page,
             sort: 'updated',
           },
@@ -76,6 +79,8 @@ class App extends React.Component {
           if (Array.isArray(data)) {
             const adaptedData = data.map((el) => repoDataAdapter(el));
             let newState = {};
+
+            // only reset cache if its a new org search
             if (organization !== orgName) {
               this.commits = new LRUCache(10, 900000);
               this.reposPages = new LRUCache(10, 900000);
@@ -88,11 +93,13 @@ class App extends React.Component {
               ...newState,
               repositories: sortByUtil(
                 adaptedData,
-                radioEnums.UPDATED_AT,
+                currentRadioSelected,
                 reposSortedDesc
               ),
-              organization: orgName,
+              organization: searchOrgName,
               currentReposPage: page,
+              reposSortedDesc,
+              currentRadioSelected
             };
             this.setState(newState, () => {
               this.reposPages.put(page, adaptedData);
@@ -104,7 +111,7 @@ class App extends React.Component {
         {
           repositories: sortByUtil(
             reposPageContent,
-            radioEnums.UPDATED_AT,
+            currentRadioSelected,
             reposSortedDesc
           ),
           currentReposPage: page,
@@ -216,44 +223,49 @@ class App extends React.Component {
     } = this.state;
     return (
       <div className="App" id="App">
-        <RepositoriesList
-          className={classNames({
-            'App-table': !currentCommitsList.length,
-            'App-table-collapse': currentCommitsList.length,
-          })}
-          sortedBy={currentRadioSelected}
-          reposSortedDesc={reposSortedDesc}
-          items={repositories}
-          onTableHeaderClick={this.onTableHeaderClick}
-          orgName={organization}
-          onRepoClick={this.getRepoCommits}
-          currentReposPage={currentReposPage}
-          totalReposPage={totalReposPage}
-          onPaginationClick={this.getOrgRepos}
-          organization={organization}
+        <Search
+          onSubmit={this.getOrgRepos}
         />
-        <div
-          className={classNames('App-table-collapse', {
-            hidden: !currentCommitsList.length,
-          })}
-        >
-          {currentCommitsList.length ? (
-            <Button
-              onClick={() => {
-                this.setState({
-                  currentCommitsList: [],
-                });
-              }}
-              className="close-commits-list"
-            >
-              <i className="fa fa-times" aria-hidden="true" />
-            </Button>
-          ) : null}
-          <CommitsList
-            className="commitsList-table"
-            currentCommitRepoSelected={currentCommitRepoSelected}
-            items={currentCommitsList}
+        <div className="App-tables-container">
+          <RepositoriesList
+            className={classNames({
+              'App-table': !currentCommitsList.length,
+              'App-table-collapse': currentCommitsList.length,
+            })}
+            sortedBy={currentRadioSelected}
+            reposSortedDesc={reposSortedDesc}
+            items={repositories}
+            onTableHeaderClick={this.onTableHeaderClick}
+            orgName={organization}
+            onRepoClick={this.getRepoCommits}
+            currentReposPage={currentReposPage}
+            totalReposPage={totalReposPage}
+            onPaginationClick={this.getOrgRepos}
+            organization={organization}
           />
+          <div
+            className={classNames('App-table-collapse', {
+              hidden: !currentCommitsList.length,
+            })}
+          >
+            {currentCommitsList.length ? (
+              <Button
+                onClick={() => {
+                  this.setState({
+                    currentCommitsList: [],
+                  });
+                }}
+                className="close-commits-list"
+              >
+                <i className="fa fa-times" aria-hidden="true" />
+              </Button>
+            ) : null}
+            <CommitsList
+              className="commitsList-table"
+              currentCommitRepoSelected={currentCommitRepoSelected}
+              items={currentCommitsList}
+            />
+          </div>
         </div>
       </div>
     );

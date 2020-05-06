@@ -183,6 +183,9 @@ class RepositoriesList extends React.Component {
               <div className="list-footer-pagination-button" />
             )}
           </div>
+          <spa className="list-footer-pagination-page organization-name">
+            <b>ORG: {organization.toUpperCase()}</b>
+          </spa>
           <span className="list-footer-pagination-page">
             <b>{items.length}</b> Repositories per Page (Scroll to see more)
           </span>

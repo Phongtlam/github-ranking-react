@@ -1,9 +1,14 @@
 .App {
+  display: flex;
+  flex-direction: column;
   font-size: 16px;
   text-align: center;
+  padding: 12px;
+}
+
+.App-tables-container {
   display: flex;
   justify-content: space-between;
-  padding: 12px;
 }
 
 .App-table {
@@ -87,7 +92,7 @@
   width: 25%;
 }
 
-.list-footer-pagination-button, .sha-link {
+.list-footer-pagination-button, .sha-link, .search-submit {
   width: 25%;
   height: 40px;
   color: #e3f2fd;
@@ -98,7 +103,7 @@
   cursor: pointer;
 }
 
-.list-footer-pagination-button:hover, .sha-link:hover {
+.list-footer-pagination-button:hover, .sha-link:hover, .search-submit:hover {
   border-color: #1e88e5;
   color: #bbdefb;
   background: #1e88e5;
@@ -191,3 +196,20 @@
   padding-right: 10px;
 }
 
+.list-footer-pagination-page.organization-name {
+  font-size: 20px;
+}
+
+.search-form {
+  display: flex;
+  height: 50px;
+}
+
+.search-label {
+  padding-right: 20px;
+}
+
+.search-submit {
+  width: 100px;
+  height: 35px;
+}
