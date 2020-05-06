@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 
-class Search extends React.Component{
+class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: ''
-    }
+      input: '',
+    };
     this._onChangeHandler = this._onChangeHandler.bind(this);
     this._onHandleSubmit = this._onHandleSubmit.bind(this);
   }
 
   _onChangeHandler(ev) {
     this.setState({
-      input: ev.target.value
+      input: ev.target.value,
     });
   }
 
@@ -24,14 +24,19 @@ class Search extends React.Component{
 
   render() {
     return (
-    <form className="search-form" onSubmit={this._onHandleSubmit}>
-      <label className="search-label">
-        github.com/
-        <input className="search-input" type="text" value={this.state.input} onChange={this._onChangeHandler} />
-      </label>
-      <input className="search-submit" type="submit" value="Submit" />
-    </form>
-    )
+      <form className="search-form" onSubmit={this._onHandleSubmit}>
+        <label className="search-label">
+          github.com/
+          <input
+            className="search-input"
+            type="text"
+            value={this.state.input}
+            onChange={this._onChangeHandler}
+          />
+        </label>
+        <input className="search-submit" type="submit" value="Submit" />
+      </form>
+    );
   }
 }
 

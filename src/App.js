@@ -15,7 +15,7 @@ import classNames from './utils/classNames.js';
 
 import repositoriesMock from './tests/mocks/repositories.js';
 import commitsMock from './tests/mocks/commits.js';
-import Search from "./components/Search";
+import Search from './components/Search';
 
 const initialState = {
   organization: '',
@@ -57,7 +57,7 @@ class App extends React.Component {
    * @param orgName {string}
    * @param page {number}
    */
-  getOrgRepos(orgName, page= 1) {
+  getOrgRepos(orgName, page = 1) {
     const { organization, reposSortedDesc, currentRadioSelected } = this.state;
     const reposPageContent = this.reposPages.get(page);
 
@@ -99,7 +99,7 @@ class App extends React.Component {
               organization: searchOrgName,
               currentReposPage: page,
               reposSortedDesc,
-              currentRadioSelected
+              currentRadioSelected,
             };
             this.setState(newState, () => {
               this.reposPages.put(page, adaptedData);
@@ -223,9 +223,7 @@ class App extends React.Component {
     } = this.state;
     return (
       <div className="App" id="App">
-        <Search
-          onSubmit={this.getOrgRepos}
-        />
+        <Search onSubmit={this.getOrgRepos} />
         <div className="App-tables-container">
           <RepositoriesList
             className={classNames({

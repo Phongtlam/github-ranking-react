@@ -92,7 +92,7 @@
   width: 25%;
 }
 
-.list-footer-pagination-button, .sha-link, .search-submit {
+.list-footer-pagination-button, .sha-link {
   width: 25%;
   height: 40px;
   color: #e3f2fd;
@@ -103,7 +103,7 @@
   cursor: pointer;
 }
 
-.list-footer-pagination-button:hover, .sha-link:hover, .search-submit:hover {
+.list-footer-pagination-button:hover, .sha-link:hover {
   border-color: #1e88e5;
   color: #bbdefb;
   background: #1e88e5;
@@ -202,14 +202,9 @@
 
 .search-form {
   display: flex;
-  height: 50px;
 }
 
 .search-label {
   padding-right: 20px;
 }
 
-.search-submit {
-  width: 100px;
-  height: 35px;
-}
