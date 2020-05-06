@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0c940766850e2582f198901b9e51b515",
+    "revision": "4f37b78fe2463fb9395c7230055ca08b",
     "url": "/github-ranking-react/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/github-ranking-react/static/css/2.94a4212d.chunk.css"
   },
   {
-    "revision": "98f887cca87609123d72",
-    "url": "/github-ranking-react/static/css/main.032aca69.chunk.css"
+    "revision": "0cf59b01196e02db53bd",
+    "url": "/github-ranking-react/static/css/main.82ecf087.chunk.css"
   },
   {
     "revision": "e55fdb36cf33656845fd",
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/github-ranking-react/static/js/2.0d3cc9f4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "98f887cca87609123d72",
+    "revision": "0cf59b01196e02db53bd",
     "url": "/github-ranking-react/static/js/main.eed87b6e.chunk.js"
   },
   {

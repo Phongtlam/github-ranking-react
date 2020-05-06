@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/github-ranking-react/static/css/main.032aca69.chunk.css",
+    "main.css": "/github-ranking-react/static/css/main.82ecf087.chunk.css",
     "main.js": "/github-ranking-react/static/js/main.eed87b6e.chunk.js",
     "main.js.map": "/github-ranking-react/static/js/main.eed87b6e.chunk.js.map",
     "runtime-main.js": "/github-ranking-react/static/js/runtime-main.c83393bb.js",
@@ -9,10 +9,10 @@
     "static/js/2.0d3cc9f4.chunk.js": "/github-ranking-react/static/js/2.0d3cc9f4.chunk.js",
     "static/js/2.0d3cc9f4.chunk.js.map": "/github-ranking-react/static/js/2.0d3cc9f4.chunk.js.map",
     "index.html": "/github-ranking-react/index.html",
-    "precache-manifest.46931c2f514dd8f33807c0132f46835c.js": "/github-ranking-react/precache-manifest.46931c2f514dd8f33807c0132f46835c.js",
+    "precache-manifest.66b62ef2d1a7c6c7a360c0ab4c149870.js": "/github-ranking-react/precache-manifest.66b62ef2d1a7c6c7a360c0ab4c149870.js",
     "service-worker.js": "/github-ranking-react/service-worker.js",
     "static/css/2.94a4212d.chunk.css.map": "/github-ranking-react/static/css/2.94a4212d.chunk.css.map",
-    "static/css/main.032aca69.chunk.css.map": "/github-ranking-react/static/css/main.032aca69.chunk.css.map",
+    "static/css/main.82ecf087.chunk.css.map": "/github-ranking-react/static/css/main.82ecf087.chunk.css.map",
     "static/js/2.0d3cc9f4.chunk.js.LICENSE.txt": "/github-ranking-react/static/js/2.0d3cc9f4.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/github-ranking-react/static/media/fontawesome-webfont.fee66e71.woff"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.c83393bb.js",
     "static/css/2.94a4212d.chunk.css",
     "static/js/2.0d3cc9f4.chunk.js",
-    "static/css/main.032aca69.chunk.css",
+    "static/css/main.82ecf087.chunk.css",
     "static/js/main.eed87b6e.chunk.js"
   ]
 }
