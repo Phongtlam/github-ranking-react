@@ -82,7 +82,7 @@ class RepositoriesList extends React.Component {
       currentReposPage,
       totalReposPage,
       onPaginationClick,
-      isMobile
+      isMobile,
     } = this.props;
     return (
       <ul className={classNames(className, 'repositories-list-container')}>
@@ -146,7 +146,6 @@ class RepositoriesList extends React.Component {
                   <i className="fa fa-calendar" aria-hidden="true" />{' '}
                   {item.updated_at_readable}
                 </span>
-
               </div>
               {currentRowSelected === item.id &&
                 this._renderCurrentRowData(item)}
@@ -154,7 +153,11 @@ class RepositoriesList extends React.Component {
           ))}
         </div>
         <footer className="repositories-list list-footer">
-          <div className={classNames("list-footer-pagination", { 'full-width': isMobile })}>
+          <div
+            className={classNames('list-footer-pagination', {
+              'full-width': isMobile,
+            })}
+          >
             {currentReposPage > 1 ? (
               <Button
                 className="list-footer-pagination-button"
@@ -226,7 +229,7 @@ RepositoriesList.propTypes = {
   onTableHeaderClick: PropTypes.func,
   currentReposPage: PropTypes.number,
   totalReposPage: PropTypes.number,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
 };
 
 RepositoriesList.defaultProps = {
@@ -240,7 +243,7 @@ RepositoriesList.defaultProps = {
   onTableHeaderClick: () => {},
   currentReposPage: 1,
   totalReposPage: 1,
-  isMobile: false
+  isMobile: false,
 };
 
 export default RepositoriesList;

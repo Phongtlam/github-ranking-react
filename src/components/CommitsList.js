@@ -121,9 +121,16 @@ class CommitsList extends React.Component {
                       </a>
                     </Button>
                   </div>
-                  <span className={classNames("list-content", { 'text-center': isMobile })}>
+                  <span
+                    className={classNames('list-content', {
+                      'text-center': isMobile,
+                    })}
+                  >
                     {commit.verified && (
-                      <i className={classNames("fa fa-check green-check")} aria-hidden="true" />
+                      <i
+                        className={classNames('fa fa-check green-check')}
+                        aria-hidden="true"
+                      />
                     )}
                   </span>
                   <span className="list-content">
@@ -163,14 +170,14 @@ CommitsList.propTypes = {
   items: PropTypes.array,
   className: PropTypes.string,
   currentCommitRepoSelected: PropTypes.object,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
 };
 
 CommitsList.defaultProps = {
   items: [],
   className: '',
   currentCommitRepoSelected: {},
-  isMobile: false
+  isMobile: false,
 };
 
 export default CommitsList;

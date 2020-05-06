@@ -46,15 +46,15 @@ class App extends React.Component {
 
   componentDidMount() {
     const { organization, currentReposPage } = this.state;
-    window.addEventListener("resize", this.resize.bind(this));
+    window.addEventListener('resize', this.resize.bind(this));
     this.resize(() => {
-      console.log('start')
+      console.log('start');
     });
-      this.getOrgRepos(organization || 'netflix', currentReposPage);
+    this.getOrgRepos(organization || 'netflix', currentReposPage);
   }
 
   resize() {
-    let isMobile = (window.innerWidth <= 920);
+    let isMobile = window.innerWidth <= 920;
     if (isMobile !== this.state.isMobile) {
       this.setState({ isMobile: isMobile });
     }
@@ -108,7 +108,7 @@ class App extends React.Component {
               organization: searchOrgName,
               currentReposPage: page,
               reposSortedDesc,
-              currentRadioSelected
+              currentRadioSelected,
             };
             this.setState(newState, () => {
               this.reposPages.put(page, adaptedData);
@@ -230,14 +230,14 @@ class App extends React.Component {
       organization,
       reposSortedDesc,
       currentCommitRepoSelected,
-      isMobile
+      isMobile,
     } = this.state;
     return (
       <div className="App" id="App">
         <Search onSubmit={this.getOrgRepos} />
         <div
-          className={classNames("App-tables-container", {
-            isMobile
+          className={classNames('App-tables-container', {
+            isMobile,
           })}
         >
           <RepositoriesList
